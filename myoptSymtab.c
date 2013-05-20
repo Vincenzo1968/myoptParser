@@ -233,6 +233,7 @@ int32_t myopt_AddGroup(myopt_Parser_t parser, const char *strDescription, bool b
 	{
 		sprintf(strError, "Invalid call myopt_AddGroup(%s): argument 'parser' is NULL\n", strDescription);
 		strcat(parser->strInternalErrors, strError);
+		parser->countInternalErrors++;
 		return -1;
 	}		
 	
