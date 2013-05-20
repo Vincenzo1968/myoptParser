@@ -1,6 +1,3 @@
-C Version:
-==========
-
 To create the static library:
 -----------------------------
 

@@ -61,9 +61,10 @@ The parameter "eMob" is an enumerated type.
 MOB = Multiple Occurrences Behavior.
 Specifies the behavior that the parser assumes if the option is specified more than once.
 It can assume the following values:
-MOB_ERROR - The parser returns an error.
-MOB_OVERRIDE - The parser will overwrite the value of previous arguments considering only the last one.
-MOB_APPEND - The parser returns a list of arguments.
+
+- MOB_ERROR - The parser returns an error.
+- MOB_OVERRIDE - The parser will overwrite the value of previous arguments considering only the last one.
+- MOB_APPEND - The parser returns a list of arguments.
 
 The parameters "nArgsMin" and "nArgsMax" specify, respectively, the minimum and maximum number of option's arguments.
 You can set both parameters to 0 if you want to specify an option that takes no arguments.
@@ -77,9 +78,9 @@ If, for the parameter "eMob" is specified MOB_OVERRIDE, both parameters must be 
 The parameter "strTypes" is a string that specifies the type of the arguments of the option.
 Can take on the values:
 
-"string" - specify a string argument.
-"int"    - specifies an argument of type integer number.
-"float"  - specifies an argument of type floating-point number.
+- "string" - specify a string argument.
+- "int"    - specifies an argument of type integer number.
+- "float"  - specifies an argument of type floating-point number.
 
 If the option takes more arguments, you can specify the types separated by commas.
 For example, if "nArgsMin" = 2 and "nArgsMax" = 2, we can set "strTypes" as "string, int."
