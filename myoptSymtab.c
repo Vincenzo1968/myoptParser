@@ -7,6 +7,7 @@
    From an idea by Leonardo Pozzati.
 
    This file is part of myoptParserLib.
+   Special thanks to Francesco Baro for code review and bug fixing.
 
    myoptParserLib is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
