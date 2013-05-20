@@ -227,10 +227,7 @@ int32_t myopt_AddGroup(myopt_Parser_t parser, const char *strDescription, bool b
 	int32_t ret;
 	int32_t x;
 	char strError[1024];	
-	
-	if ( !parser )
-		return -1;
-		
+			
 	if ( !parser )
 	{
 		sprintf(strError, "Invalid call myopt_AddGroup(%s): argument 'parser' is NULL\n", strDescription);
