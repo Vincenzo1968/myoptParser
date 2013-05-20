@@ -5,6 +5,7 @@
    e-mail: vincenzo.locicero@libero.it
     
    From an idea by Leonardo Pozzati.
+   Special thanks to Francesco Baro for code review and bug fixing.
 
    This file use myoptParserLib.
 
