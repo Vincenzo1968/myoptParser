@@ -202,9 +202,12 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 			{
 				if ( md.m_Parser->arrayOptArgs[x].nArgsMin == md.m_Parser->arrayOptArgs[x].nArgsMax && md.m_Parser->arrayOptArgs[x].nArgsMin != md.m_Parser->arrayOptArgs[x].countArgs )
 				{
-					ret = 0;
-					sprintf(strError, "Error: option %s: wrong number of arguments: must be %d; found %d.\n", strOptionName, md.m_Parser->arrayOptArgs[x].nArgsMin, md.m_Parser->arrayOptArgs[x].countArgs);
-					strcat(md.m_Parser->strErrors, strError);
+					if ( md.m_Parser->arrayOptArgs[x].eMob != MOB_APPEND )
+					{
+						ret = 0;
+						sprintf(strError, "Error: option %s: wrong number of arguments: must be %d; found %d.\n", strOptionName, md.m_Parser->arrayOptArgs[x].nArgsMin, md.m_Parser->arrayOptArgs[x].countArgs);
+						strcat(md.m_Parser->strErrors, strError);
+					}
 				}
 				else if ( md.m_Parser->arrayOptArgs[x].nArgsMin < md.m_Parser->arrayOptArgs[x].nArgsMax )
 				{
