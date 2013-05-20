@@ -4,7 +4,8 @@
    Author: Vincenzo Lo Cicero.
    e-mail: vincenzo.locicero@libero.it
     
-   From an idea by Leonardo Pozzati.
+   From an idea by Leonardo Pozzati <e-mail: leon.pozzati@gmail.com>.
+   
    Special thanks to Francesco Baro for code review and bug fixing.
 
    This file is part of myoptParserLib.
