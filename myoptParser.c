@@ -521,6 +521,8 @@ int myopt_GetNextType(const char *strTypes, int len, int *nextPos, int bOnlyFirs
 		lastType = T_INT;
 	else if ( strcmp(str, "float") == 0 )
 		lastType = T_FLOAT;
+	else if ( strcmp(str, "string") == 0 )
+		lastType = T_STRING;
 
 	return lastType;
 }
