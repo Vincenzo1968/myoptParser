@@ -502,7 +502,7 @@ int myopt_GetNextType(const char *strTypes, int len, int *nextPos, int bOnlyFirs
 		x = 0;
 	
 	if ( x >= len )
-		return T_STRING;
+		return lastType;
 	
 	i = 0;
 	while ( x < len )
