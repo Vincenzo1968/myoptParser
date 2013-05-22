@@ -6,8 +6,9 @@
     
    From an idea by Leonardo Pozzati <e-mail: leon.pozzati@gmail.com>.
    
-   Special thanks to Francesco Baro for code review and bug fixing.
-
+   Special thanks to Francesco Baro <e-mail: francesco.baro@libero.it >
+   for code review and bug fixing.
+   
    This file is part of myoptParserLib.
 
    myoptParserLib is free software: you can redistribute it and/or modify
