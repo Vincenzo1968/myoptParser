@@ -309,6 +309,7 @@ bool myopt_AddOption(myopt_Parser_t parser,
 	{
 		sprintf(strError, "Invalid call myopt_AddOption(%s): idGroup %d not valid.\n", strOptionName, idGroup);
 		strcat(parser->strInternalErrors, strError);
+		parser->countInternalErrors++;
 		return false;
 	}
 		
@@ -338,7 +339,8 @@ bool myopt_AddOption(myopt_Parser_t parser,
 	if ( myopt_LookupShort(parser, shortName) >= 0 )
 	{
 		sprintf(strError, "Invalid call myopt_AddOption(%s): the option is already present in the symbol table\n", strOptionName);
-		strcat(parser->strInternalErrors, strError);		
+		strcat(parser->strInternalErrors, strError);
+		parser->countInternalErrors++;		
 		return false;
 	}
 	else
@@ -355,7 +357,8 @@ bool myopt_AddOption(myopt_Parser_t parser,
 		if ( myopt_LookupLong(parser, longName) >= 0 )
 		{
 			sprintf(strError, "Invalid call myopt_AddOption(%s): the option is already present in the symbol table\n", strOptionName);
-			strcat(parser->strInternalErrors, strError);					
+			strcat(parser->strInternalErrors, strError);
+			parser->countInternalErrors++;					
 			return false;
 		}
 		else
