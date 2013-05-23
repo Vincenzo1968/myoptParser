@@ -28,12 +28,9 @@
 #ifndef __MY_OPT_SYMTAB_H
 #define __MY_OPT_SYMTAB_H
 
-#include <stdint.h>
-#include <stdbool.h>
+#include "common.h"
 
-#define MAX_OPTS 256
-#define MAX_LEN_STR 256
-#define OR_MORE -1
+BEGIN_C_DECLS
 
 typedef enum _myopt_ArgumentTypeEnum
 {	
@@ -140,5 +137,7 @@ bool myopt_SetPositionalArgsParams(myopt_Parser_t parser, const char *strName, i
 myopt_ArgsList* myopt_ArgsListNewNode(myopt_ArgsList *Elem);
 myopt_ArgsList* myopt_ArgsListAppend(myopt_ArgsList *Elem, myopt_ArgsList *first);
 void myopt_ArgsListFree(myopt_ArgsList *first);
+
+END_C_DECLS
 
 #endif /* __MY_OPT_SYMTAB_H */

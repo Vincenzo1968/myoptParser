@@ -25,11 +25,6 @@
    along with myoptParserLib.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <malloc.h>
-
 #include "myoptSymtab.h"
 
 myopt_Parser_t myopt_InitParser()

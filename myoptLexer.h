@@ -28,9 +28,10 @@
 #ifndef __MY_OPT_LEXER_H
 #define __MY_OPT_LEXER_H
 
-#include <stdint.h>
-#include <stdbool.h>
+#include "common.h"
 #include "myoptSymtab.h"
+
+BEGIN_C_DECLS
 
 typedef enum _myopt_TokenTypeEnum
 {	
@@ -54,5 +55,7 @@ typedef struct _myopt_Token
 void myopt_InitToken(myopt_Token *tok);
 int myopt_IsSeparator(int c);
 myopt_TokenTypeEnum myopt_GetNextToken(myopt_Parser_t parser, myopt_Token *token);
+
+END_C_DECLS
 
 #endif /* __MY_OPT_LEXER_H */

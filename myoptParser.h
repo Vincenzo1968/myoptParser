@@ -28,8 +28,11 @@
 #ifndef __MY_OPT_PARSER_H
 #define __MY_OPT_PARSER_H
 
+#include "common.h"
 #include "myoptLexer.h"
 #include "myoptSymtab.h"
+
+BEGIN_C_DECLS
 
 typedef struct _myopt_ParserData
 {
@@ -51,5 +54,7 @@ int myopt_GetValueType(myopt_Argument *arg);
 int myopt_CheckTypes(myopt_ParserData *pd, myopt_Argument arrayArgs[], int32_t countPosArgs, char *strTypes, const char *strOptName, int bOnlyFirst);
 
 void myopt_ExtractFileName(const char *szPathName, char *szFileName);
+
+END_C_DECLS
 
 #endif /* __MY_OPT_PARSER_H */
