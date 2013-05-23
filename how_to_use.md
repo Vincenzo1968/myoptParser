@@ -72,8 +72,6 @@ For the parameter "nArgsMax" you can use the macro OR_MORE.
 For example, if you want the option accept zero or more arguments, set "nArgsMin" = 0 and "nArgsMax" = OR_MORE.
 If you want the option accepts one or more arguments, set "nArgsMin" = 1 and "nArgsMax" = OR_MORE.
 If you want the option accept three to five arguments, set "nArgsMin" = 3 and "nArgsMax" = 5.
-Note that both parameters are automatically set to 1 if you specify MOB_APPEND for the parameter "eMob."
-If, for the parameter "eMob" is specified MOB_OVERRIDE, both parameters must be set to 0 or 1.
 
 The parameter "strTypes" is a string that specifies the type of the arguments of the option.
 Can take on the values:

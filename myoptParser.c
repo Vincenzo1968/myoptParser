@@ -94,8 +94,7 @@ int myopt_ParseArray(myopt_Parser_t parser, int argc, char* argv[])
 		}
 		x++;
 	}
-	len += argc + 1; // Per gli spazi
-	//len++;
+	len += argc + 1;
 	
 	parser->strInput = (char*)malloc(sizeof(char) * len);
 	if ( !(parser->strInput ) )
@@ -135,9 +134,9 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 	int x, y;	
 	myopt_ArgsList* pArgsList = NULL;
 	char strOptionName[1024];
-	int bOnlyFirst;
 	int *countOptionsOfGroup = NULL;
 	int32_t idGroup;
+	int32_t nArgsMax;
 	myopt_ParserData md;
 	
 	if ( !parser )
@@ -194,7 +193,7 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 			}				
 			
 			if ( md.m_Parser->arrayOptArgs[x].countOccurrences > 0 )
-			{
+			{				
 				if ( md.m_Parser->arrayOptArgs[x].nArgsMin == md.m_Parser->arrayOptArgs[x].nArgsMax && md.m_Parser->arrayOptArgs[x].nArgsMin != md.m_Parser->arrayOptArgs[x].countArgs )
 				{
 					if ( md.m_Parser->arrayOptArgs[x].eMob != MOB_APPEND )
@@ -206,7 +205,11 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 				}
 				else if ( md.m_Parser->arrayOptArgs[x].nArgsMin < md.m_Parser->arrayOptArgs[x].nArgsMax )
 				{
-					if ( md.m_Parser->arrayOptArgs[x].countArgs < md.m_Parser->arrayOptArgs[x].nArgsMin || md.m_Parser->arrayOptArgs[x].countArgs > md.m_Parser->arrayOptArgs[x].nArgsMax )
+					nArgsMax = md.m_Parser->arrayOptArgs[x].nArgsMax;
+					if ( md.m_Parser->arrayOptArgs[x].eMob == MOB_APPEND )
+						nArgsMax *= md.m_Parser->arrayOptArgs[x].countOccurrences;
+					
+					if ( md.m_Parser->arrayOptArgs[x].countArgs < md.m_Parser->arrayOptArgs[x].nArgsMin || md.m_Parser->arrayOptArgs[x].countArgs > nArgsMax )
 					{
 						ret = 0;
 						sprintf(strError, "Error: option %s: wrong number of arguments: must be between %d and %d; found %d.\n", strOptionName, md.m_Parser->arrayOptArgs[x].nArgsMin, md.m_Parser->arrayOptArgs[x].nArgsMax, md.m_Parser->arrayOptArgs[x].countArgs);
@@ -246,12 +249,8 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 				}
 				myopt_ArgsListFree(md.m_Parser->arrayOptArgs[x].listArgs);
 				md.m_Parser->arrayOptArgs[x].listArgs = NULL;				
-								
-				if ( md.m_Parser->arrayOptArgs[x].eMob == MOB_APPEND )
-					bOnlyFirst = 1;
-				else
-					bOnlyFirst = 0;
-				if ( !myopt_CheckTypes(&md, md.m_Parser->arrayOptArgs[x].arrayArgs, md.m_Parser->arrayOptArgs[x].countArgs, md.m_Parser->arrayOptArgs[x].strTypes, strOptionName, bOnlyFirst) )
+				
+				if ( !myopt_CheckTypes(&md, md.m_Parser->arrayOptArgs[x].arrayArgs, md.m_Parser->arrayOptArgs[x].countArgs, md.m_Parser->arrayOptArgs[x].strTypes, strOptionName) )
 					ret = 0;
 			}
 		}
@@ -294,7 +293,7 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 			strcat(md.m_Parser->strErrors, strError);
 		}
 				
-		if ( !myopt_CheckTypes(&md, md.m_Parser->arrayPosArgs, md.m_Parser->countPosArgs, md.m_Parser->strPosTypes, NULL, 0) )
+		if ( !myopt_CheckTypes(&md, md.m_Parser->arrayPosArgs, md.m_Parser->countPosArgs, md.m_Parser->strPosTypes, NULL) )
 			ret = 0;			
 	}
 		
@@ -338,12 +337,10 @@ int myopt_ArgList(myopt_ParserData *pd)
 			strcpy(strOption, pd->m_Token.str);
 			if ( pd->m_Token.Type == T_SHORT )
 			{		
-				//printf("SHORT OPTION: %s\n", pd->m_Token.str);
 				x = myopt_LookupShort(pd->m_Parser, pd->m_Token.str[1]);
 			}
 			else
 			{
-				//printf("LONG OPTION: %s\n", pd->m_Token.str);
 				x = myopt_LookupLong(pd->m_Parser, pd->m_Token.str + 2);
 			}
 			if ( x < 0 )
@@ -351,7 +348,18 @@ int myopt_ArgList(myopt_ParserData *pd)
 			pd->m_Parser->arrayOptArgs[x].countOccurrences++;
 			
 			pArgsList = pd->m_Parser->arrayOptArgs[x].listArgs;
-			
+
+			if ( pd->m_Parser->arrayOptArgs[x].eMob == MOB_OVERRIDE )
+			{
+				if ( pd->m_Parser->arrayOptArgs[x].listArgs != NULL )
+				{
+					myopt_ArgsListFree(pd->m_Parser->arrayOptArgs[x].listArgs);
+					pd->m_Parser->arrayOptArgs[x].listArgs = NULL;
+				}
+				pArgsList = NULL;
+				pd->m_Parser->arrayOptArgs[x].countArgs = 0;				
+			}
+													
 			if ( pd->m_Parser->arrayOptArgs[x].nArgsMax < 0 ) /* nArgsMax == OR_MORE*/
 			{
 				myopt_GetNextToken(pd->m_Parser, &(pd->m_Token));
@@ -399,38 +407,15 @@ int myopt_ArgList(myopt_ParserData *pd)
 						strcpy(argument.arg.strValue, pd->m_Token.str);
 						argument.arg.intValue = 0;
 						argument.arg.floatValue = 0;
-						if ( pd->m_Parser->arrayOptArgs[x].eMob == MOB_OVERRIDE )
+						
+						pArgsList = myopt_ArgsListAppend(&argument, pArgsList);
+						if ( pArgsList == NULL )
 						{
-							if ( pArgsList == NULL )
-							{
-								pArgsList = myopt_ArgsListAppend(&argument, pArgsList);
-								if ( pArgsList == NULL )
-								{
-									strcat(pd->m_Parser->strInternalErrors, "Error: insufficient memory\n");
-									pd->m_Parser->countInternalErrors++;
-									return 0;
-								}								
-							}
-							else
-							{
-								pArgsList->arg.Type = argument.arg.Type;
-								strcpy(pArgsList->arg.strValue, argument.arg.strValue);
-								pArgsList->arg.intValue = argument.arg.intValue;
-								pArgsList->arg.floatValue = argument.arg.floatValue;								
-							}
-							pd->m_Parser->arrayOptArgs[x].countArgs = 1;
+							strcat(pd->m_Parser->strInternalErrors, "Error: insufficient memory\n");
+							pd->m_Parser->countInternalErrors++;
+							return 0;
 						}
-						else
-						{
-							pArgsList = myopt_ArgsListAppend(&argument, pArgsList);
-							if ( pArgsList == NULL )
-							{
-								strcat(pd->m_Parser->strInternalErrors, "Error: insufficient memory\n");
-								pd->m_Parser->countInternalErrors++;
-								return 0;
-							}
-							pd->m_Parser->arrayOptArgs[x].countArgs++;
-						}
+						pd->m_Parser->arrayOptArgs[x].countArgs++;												
 					}
 				}
 				
@@ -439,7 +424,6 @@ int myopt_ArgList(myopt_ParserData *pd)
 			
 			break;
 		case T_POSITIONAL:
-			//printf("POSITIONAL ARGUMENT: %s\n", pd->m_Token.str);
 			if ( pd->m_Parser->countPosArgs >= MAX_OPTS )
 			{
 				pd->m_Parser->arrayPosArgs = (myopt_Argument*)realloc(pd->m_Parser->arrayPosArgs, (sizeof(myopt_Argument) * pd->m_Parser->countPosArgs) + MAX_OPTS);
@@ -470,7 +454,6 @@ int myopt_ArgList(myopt_ParserData *pd)
 				strcat(pd->m_Parser->strErrors, "Error: multiple occurrences of '--'.\n");
 				return 0;
 			}
-			//printf("END OF OPTIONS: %s\n", pd->m_Token.str);
 			break;
 		case T_ERROR:
 			return 0;
@@ -485,16 +468,13 @@ int myopt_ArgList(myopt_ParserData *pd)
 	return 1;
 }
 
-int myopt_GetNextType(const char *strTypes, int len, int *nextPos, int bOnlyFirst, int lastType)
+int myopt_GetNextType(const char *strTypes, int len, int *nextPos, int lastType)
 {
 	char str[MAX_LEN_STR];
 	int x;
 	int i;
 	
 	x = *nextPos;
-	
-	if ( bOnlyFirst )
-		x = 0;
 	
 	if ( x >= len )
 		return lastType;
@@ -619,7 +599,7 @@ uscita:
 	return T_STRING;
 }
 
-int myopt_CheckTypes(myopt_ParserData *pd, myopt_Argument arrayArgs[], int32_t countPosArgs, char *strTypes, const char *strOptName, int bOnlyFirst)
+int myopt_CheckTypes(myopt_ParserData *pd, myopt_Argument arrayArgs[], int32_t countPosArgs, char *strTypes, const char *strOptName)
 {
 	char strError[1024];	
 	int x;
@@ -637,7 +617,7 @@ int myopt_CheckTypes(myopt_ParserData *pd, myopt_Argument arrayArgs[], int32_t c
 	type1 = T_STRING;
 	while ( x < countPosArgs )
 	{
-		type1 = myopt_GetNextType(strTypes, len, &nNextPos, bOnlyFirst, type1);
+		type1 = myopt_GetNextType(strTypes, len, &nNextPos, type1);
 		type2 = myopt_GetValueType(&(arrayArgs[x]));
 		
 		switch ( type1 )

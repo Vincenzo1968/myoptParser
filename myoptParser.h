@@ -49,9 +49,9 @@ int myopt_Match(myopt_TokenTypeEnum ExpectedToken, myopt_ParserData *pd);
 
 int myopt_ArgList(myopt_ParserData *pd);
 
-int myopt_GetNextType(const char *strTypes, int len, int *nextPos, int bOnlyFirst, int lastType);
+int myopt_GetNextType(const char *strTypes, int len, int *nextPos, int lastType);
 int myopt_GetValueType(myopt_Argument *arg);
-int myopt_CheckTypes(myopt_ParserData *pd, myopt_Argument arrayArgs[], int32_t countPosArgs, char *strTypes, const char *strOptName, int bOnlyFirst);
+int myopt_CheckTypes(myopt_ParserData *pd, myopt_Argument arrayArgs[], int32_t countPosArgs, char *strTypes, const char *strOptName);
 
 void myopt_ExtractFileName(const char *szPathName, char *szFileName);
 

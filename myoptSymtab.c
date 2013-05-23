@@ -385,26 +385,7 @@ bool myopt_AddOption(myopt_Parser_t parser,
 		
 	parser->arrayOptArgs[parser->countOptArgs].nArgsMin = nArgsMin;	
 	parser->arrayOptArgs[parser->countOptArgs].nArgsMax = nArgsMax;
-	
-	if ( eMob == MOB_APPEND )
-	{
-		parser->arrayOptArgs[parser->countOptArgs].nArgsMin = 1;
-		parser->arrayOptArgs[parser->countOptArgs].nArgsMax = 1;		
-	}
-	else if ( eMob == MOB_OVERRIDE )
-	{
-		if ( nArgsMax <= 1 )
-		{
-			parser->arrayOptArgs[parser->countOptArgs].nArgsMin = nArgsMin;
-			parser->arrayOptArgs[parser->countOptArgs].nArgsMax = nArgsMax;
-		}
-		else
-		{
-			parser->arrayOptArgs[parser->countOptArgs].nArgsMin = 1;
-			parser->arrayOptArgs[parser->countOptArgs].nArgsMax = 1;
-		}
-	}
-	
+		
 	parser->arrayOptArgs[parser->countOptArgs].countArgs = 0;
 		
 	if ( strTypes == NULL || strlen(strTypes) == 0 )
@@ -479,7 +460,6 @@ int myopt_LookupLong(myopt_Parser_t parser, const char *longName)
 			return x;
 	}
 	
-	//return -1;
 	return myopt_LookupLongPrefix(parser, longName);
 }
 
@@ -551,9 +531,7 @@ bool myopt_CheckTypesString(myopt_Parser_t parser, const char *strOptionName, co
 	char strError[1024];
 	int len;
 	bool ret = true;
-	
-	//myopt_NormalizeStringTypes(strTypes);
-	
+		
 	len = strlen(strTypes);
 	if ( len == 0 )
 		return true;
