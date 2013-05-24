@@ -18,8 +18,8 @@ La prima cosa da fare è chiamare la funzione "myopt_InitParser":
         return -1;
 ```
 
-La funzionme ritorna un puntatore alla struct "_myopt_Parser_t".
-Tale puntatore va usato come primo argomento in tutte le altre funzioni della libreria ed è. quindi, molto importante verificare che il puntatore ritornato non sia NULL prima di continuare.
+La funzione ritorna un puntatore alla struct "_myopt_Parser_t".
+Tale puntatore va usato come primo argomento in tutte le altre funzioni della libreria ed è, quindi, molto importante verificare che il puntatore ritornato non sia NULL prima di continuare.
 
 Il passo successivo consiste nel chiamare la funzione "myopt_AddGroup":
 
@@ -58,7 +58,6 @@ Il parametro "bRequired" viene valutato se e solo se è stato specificato "false
 
 Il parametro "eMob" è un tipo enumerativo.
 MOB = Multiple Occurrences Behavior.
-Specifies the behavior that the parser assumes if the option is specified more than once.
 Indica il comportamento che deve assumere il parser se un'opzione viene specificata più di una volta dall'utente.
 Può assumere i seguenti valori:
 
@@ -69,7 +68,7 @@ Può assumere i seguenti valori:
 I parametri "nArgsMin" e "nArgsMax" specificano, rispettivamente, Il minimo e il massimo numero di argomenti che un'opzione può avere.
 È possibile impostare entrambi i parametri a zero per specificare un'opzione che non accetta argomenti.
 Per il parametro "nArgsMax" è possibile usare la macro OR_MORE.
-Per esempio, se si vuole che un'opzione accetti zero o più argomenti, si imposto "nArgsMin" = 0 e "nArgsMax" = OR_MORE.
+Per esempio, se si vuole che un'opzione accetti zero o più argomenti, si imposti "nArgsMin" = 0 e "nArgsMax" = OR_MORE.
 Se si vuole che un'opzione accetti uno o più argomenti, si imposti "nArgsMin" = 1 e "nArgsMax" = OR_MORE.
 Se si vuole che un'opzione accetti da tre a cinque argomenti, si imposti "nArgsMin" = 3 e "nArgsMax" = 5.
 Se si vule che un'opzione accetti esattamente un argomento, si imposti "nArgsMin" = 1 e "nArgsMax" = 1.
@@ -122,7 +121,6 @@ La funzione ritorna true se il parser non ha trovato errori.
 Anche se l'utente ha digitato correttamente le opzioni della riga di comando, prima di procedere è necessario controllare che la variabile "countInternalErrors" sia uguale a zero.
 Un tipico errore interno potrebbe essere una specificazione di tipo non valida: "sting, int, float": "sting" invece di "string".
 
-If everything is ok we can proceed to the reading of the options and related arguments:
 Se è tutto ok, possiamo procedere con la lettura delle opzioni(e relativi argomenti) specificate dall'utente:
 
 ```c
