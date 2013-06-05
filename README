@@ -3,8 +3,8 @@ myoptParser README
 
 1 - Introduction
 2 - Roadmap
-3 - Building Jupiter 
-4 - Installing Jupiter 
+3 - Building myoptParser 
+4 - Installing myoptParser 
 
 
 1 - Introduction
@@ -16,11 +16,6 @@ myoptParser is a library to parsing command line arguments.
 
 3 - Building myoptParser
 --------------------
-Building myoptParser from the github repository source code requires the 
-proper installation of automake, autoconf and libtool. Building myoptParser
-from a distribution source tarball does NOT require Autotools or libtool 
-to be installed.
-
 To build myoptParser use the following steps:
 
    1) Unzip and untar the distribution myoptparser-1.0.tar.gz source tarball:
@@ -35,7 +30,6 @@ To build myoptParser use the following steps:
 
       $ git clone https://github.com/Vincenzo1968/myoptParser.git
       $ cd myoptParser
-      $ autoreconf -i
           
    2) Run the configure script to create myoptParser Makefiles. If the configure
       script fails... now you have a problem.
