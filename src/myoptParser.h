@@ -69,8 +69,6 @@
 # define __bool_true_false_are_defined 1
 #endif
 
-//#include <stdbool.h>
-
 BEGIN_C_DECLS
 
 typedef enum _myopt_TokenTypeEnum
