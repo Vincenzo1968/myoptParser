@@ -22,7 +22,7 @@ To build myoptParser use the following steps:
 
    1) Unzip and untar the distribution myoptparser-1.0.tar.gz source tarball:
    
-      $ tar -jxvf myoptparser-1.0.tar.gz
+      $ tar -xvf myoptparser-1.0.tar.gz
       $ cd myoptParser-x.y
  OR
 
