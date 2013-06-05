@@ -27,7 +27,8 @@ AC_PROG_CC
 AC_CHECK_HEADERS([malloc.h stdint.h stdlib.h string.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
-AC_CHECK_HEADER_STDBOOL
+#AC_CHECK_HEADER_STDBOOL
+AC_HEADER_STDBOOL
 AC_TYPE_INT32_T
 AC_TYPE_INT64_T
 AC_TYPE_UINT32_T

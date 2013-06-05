@@ -28,6 +28,10 @@
 #ifndef __MY_OPT_PARSER_H
 #define __MY_OPT_PARSER_H
 
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #ifdef __cplusplus
 #  define BEGIN_C_DECLS extern "C" {
 #  define END_C_DECLS   }
@@ -48,7 +52,24 @@
 #include <math.h>
 #include <malloc.h>
 #include <stdint.h>
-#include <stdbool.h>
+
+#ifdef HAVE_STDBOOL_H
+# include <stdbool.h>
+#else
+# ifndef HAVE__BOOL
+#  ifdef __cplusplus
+    typedef bool _Bool;
+#  else
+#   define _Bool signed char
+#  endif
+# endif
+# define bool _Bool
+# define false 0
+# define true 1
+# define __bool_true_false_are_defined 1
+#endif
+
+//#include <stdbool.h>
 
 BEGIN_C_DECLS
 

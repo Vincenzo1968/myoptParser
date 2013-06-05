@@ -12173,6 +12173,7 @@ done
 
 
 # Checks for typedefs, structures, and compiler characteristics.
+#AC_CHECK_HEADER_STDBOOL
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for stdbool.h that conforms to C99" >&5
 $as_echo_n "checking for stdbool.h that conforms to C99... " >&6; }
 if ${ac_cv_header_stdbool_h+:} false; then :
@@ -12259,6 +12260,12 @@ _ACEOF
 
 fi
 
+
+if test $ac_cv_header_stdbool_h = yes; then
+
+$as_echo "#define HAVE_STDBOOL_H 1" >>confdefs.h
+
+fi
 
 ac_fn_c_find_intX_t "$LINENO" "32" "ac_cv_c_int32_t"
 case $ac_cv_c_int32_t in #(
