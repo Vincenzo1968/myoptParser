@@ -3,10 +3,10 @@ myoptParser
 
 C library for parsing command line arguments
 
-1 - Introduction
-2 - Roadmap
-3 - Building myoptParser 
-4 - Installing myoptParser 
+- 1 Introduction
+- 2 Roadmap
+- 3 Building myoptParser 
+- 4 Installing myoptParser 
 
 
 1 - Introduction
