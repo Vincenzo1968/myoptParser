@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
 	if ( parser->countInternalErrors > 0 )
 	{
 		printf("Internal errors:\n");
-		printf(parser->strInternalErrors);
+		printf("%s\n", parser->strInternalErrors);
 		return -1;
 	}		
 	
@@ -117,15 +117,15 @@ int main(int argc, char* argv[])
 	idOption = myopt_LookupLong(parser, "help");
 	if ( idOption >= 0 && parser->arrayOptArgs[idOption].countOccurrences > 0 )
 	{
-		printf(parser->strUsage);
+		printf("%s\n", parser->strUsage);
 		myopt_FreeParser(parser);
 		return 0;
 	}	
 	
 	if ( !bParse )
 	{
-		printf(parser->strUsage);
-		printf(parser->strErrors);
+		printf("%s\n", parser->strUsage);
+		printf("%s\n", parser->strErrors);
 		myopt_FreeParser(parser);
 		return -1;		
 	}
