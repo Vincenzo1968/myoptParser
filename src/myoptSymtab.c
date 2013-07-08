@@ -334,17 +334,32 @@ bool myopt_AddOption(myopt_Parser_t parser,
 	}
 		
 	parser->arrayOptArgs[parser->countOptArgs].idGroup = idGroup;	
-			
-	if ( myopt_LookupShort(parser, shortName) >= 0 )
+	
+	if ( shortName == 0 && longName == NULL )
 	{
-		sprintf(strError, "Invalid call myopt_AddOption(%s): the option is already present in the symbol table\n", strOptionName);
+		sprintf(strError, "Invalid call myopt_AddOption(%s): must be specified one of shortName and longName\n", strOptionName);
 		strcat(parser->strInternalErrors, strError);
 		parser->countInternalErrors++;		
-		return false;
+		return false;		
+	}
+	
+	if ( shortName != 0 )
+	{
+		if ( myopt_LookupShort(parser, shortName) >= 0 )
+		{
+			sprintf(strError, "Invalid call myopt_AddOption(%s): the option is already present in the symbol table\n", strOptionName);
+			strcat(parser->strInternalErrors, strError);
+			parser->countInternalErrors++;		
+			return false;
+		}
+		else
+		{
+			parser->arrayOptArgs[parser->countOptArgs].shortName = shortName;
+		}
 	}
 	else
 	{
-		parser->arrayOptArgs[parser->countOptArgs].shortName = shortName;
+		parser->arrayOptArgs[parser->countOptArgs].shortName = '\0';
 	}
 								
 	if ( longName == NULL || strlen(longName) == 0 )
