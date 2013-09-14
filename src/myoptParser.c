@@ -593,11 +593,15 @@ uscita:
 	switch ( state )
 	{
 		case S2:
+			if ( c != '\0' )
+				return T_STRING;
 			arg->Type = T_INT;
 			arg->intValue = atoi(arg->strValue);
 			return T_INT;		
 		case S4:
 		case S7:
+			if ( c != '\0' )
+				return T_STRING;		
 			arg->Type = T_FLOAT;
 			arg->floatValue = atof(arg->strValue);
 			return T_FLOAT;

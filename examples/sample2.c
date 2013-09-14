@@ -39,8 +39,6 @@ gcc -Wall -W -O2 -std=c99 -L. sample2.c -lmyoptParser -o sample2
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-#include <stdbool.h>
-#include <stdint.h>
 
 #include "myoptParser.h"
 
