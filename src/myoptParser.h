@@ -189,6 +189,7 @@ bool myopt_AddOption(myopt_Parser_t parser,
 
 int myopt_LookupShort(myopt_Parser_t parser, char shortName);
 int myopt_LookupLong(myopt_Parser_t parser, const char *longName);
+int myopt_FindLong(myopt_Parser_t parser, const char *longName);
 bool myopt_MakeOptionName(char shortName, const char *longName, char *strOptionName);
 bool myopt_SetPositionalArgsParams(myopt_Parser_t parser, const char *strName, int32_t nArgsMin, int32_t nArgsMax, const char *strTypes);
 

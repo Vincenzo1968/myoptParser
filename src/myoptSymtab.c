@@ -368,7 +368,8 @@ bool myopt_AddOption(myopt_Parser_t parser,
 	}
 	else
 	{		
-		if ( myopt_LookupLong(parser, longName) >= 0 )
+		/* if ( myopt_LookupLong(parser, longName) >= 0 ) */
+		if ( myopt_FindLong(parser, longName) >= 0 )
 		{
 			sprintf(strError, "Invalid call myopt_AddOption(%s): the option is already present in the symbol table\n", strOptionName);
 			strcat(parser->strInternalErrors, strError);
@@ -481,6 +482,20 @@ int myopt_LookupLong(myopt_Parser_t parser, const char *longName)
 	
 	return myopt_LookupLongPrefix(parser, longName);
 }
+
+int myopt_FindLong(myopt_Parser_t parser, const char *longName)
+{
+	int x;
+		
+	for (x = 0; x < parser->countOptArgs; x++)
+	{
+		if ( strcmp(parser->arrayOptArgs[x].longName, longName) == 0 )
+			return x;
+	}
+	
+	return -1;
+}
+
 
 bool myopt_SetPositionalArgsParams(myopt_Parser_t parser, const char *strName, int32_t nArgsMin, int32_t nArgsMax, const char *strTypes)
 {
