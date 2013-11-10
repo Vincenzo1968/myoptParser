@@ -590,6 +590,9 @@ int myopt_GetValueType(myopt_Argument *arg)
 	}
 	
 uscita:
+	if ( c != '\0' )
+		return T_STRING;
+		
 	switch ( state )
 	{
 		case S2:
