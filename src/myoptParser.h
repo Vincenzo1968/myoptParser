@@ -41,7 +41,8 @@
 #endif /* __cplusplus */
 
 #define MAX_OPTS 256
-#define MAX_LEN_STR 256
+#define MAX_LEN_STR 1024
+#define STR_ERRORS_SIZE 8192
 #define OR_MORE -1
 
 
@@ -84,7 +85,7 @@ typedef enum _myopt_TokenTypeEnum
 typedef struct _myopt_Token
 {
 	myopt_TokenTypeEnum Type;
-	char str[MAX_LEN_STR];
+	char str[MAX_LEN_STR + 1];
 	int nNextPos;
 	bool bEndOfOptions;
 	bool bShortOptionState;

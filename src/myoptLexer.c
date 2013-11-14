@@ -69,12 +69,21 @@ myopt_TokenTypeEnum myopt_GetNextToken(myopt_Parser_t parser, myopt_Token *token
 		{
 			i = 0;
 			token->str[i++] = '-';
+			if ( i > MAX_LEN_STR )
+			{
+				token->str[i-1] = '\0';
+				sprintf(strError, "Error: token too long: '%s'.\nMax length is %d.\n", token->str, MAX_LEN_STR);				
+				token->Type = T_ERROR;
+				strncat(parser->strErrors, strError, STR_ERRORS_SIZE);
+				token->nNextPos++;
+				return token->Type;				
+			}
 			token->nNextPos++;
 			
 			if ( myopt_IsSeparator(parser->strInput[token->nNextPos]) || parser->strInput[token->nNextPos] == '\0' )
 			{
 				token->Type = T_ERROR;				
-				strcat(parser->strErrors, "Error: wrong option '-'\n");
+				strncat(parser->strErrors, "Error: wrong option '-'\n", STR_ERRORS_SIZE);
 				token->nNextPos++;
 				return token->Type;
 			}
@@ -88,6 +97,15 @@ myopt_TokenTypeEnum myopt_GetNextToken(myopt_Parser_t parser, myopt_Token *token
 					while ( !isspace(c) && c != '\0'  )
 					{
 						token->str[i++] = c;
+						if ( i > MAX_LEN_STR )
+						{
+							token->str[i-1] = '\0';
+							sprintf(strError, "Error: token too long: '%s'.\nMax length is %d.\n", token->str, MAX_LEN_STR);				
+							token->Type = T_ERROR;
+							strncat(parser->strErrors, strError, STR_ERRORS_SIZE);
+							token->nNextPos++;
+							return token->Type;											
+						}						
 						c = parser->strInput[token->nNextPos++];
 					}
 					token->str[i] = '\0';
@@ -102,6 +120,15 @@ myopt_TokenTypeEnum myopt_GetNextToken(myopt_Parser_t parser, myopt_Token *token
 				if ( myopt_IsSeparator(parser->strInput[token->nNextPos + 1]) || parser->strInput[token->nNextPos + 1] == '\0' )
 				{
 					token->str[i++] = '-';
+					if ( i > MAX_LEN_STR )
+					{
+						token->str[i-1] = '\0';
+						sprintf(strError, "Error: token too long: '%s'.\nMax length is %d.\n", token->str, MAX_LEN_STR);				
+						token->Type = T_ERROR;
+						strncat(parser->strErrors, strError, STR_ERRORS_SIZE);
+						token->nNextPos++;
+						return token->Type;											
+					}					
 					token->str[i] = '\0';
 					token->Type = T_END_OPTIONS;
 					token->bEndOfOptions = true;
@@ -121,7 +148,7 @@ myopt_TokenTypeEnum myopt_GetNextToken(myopt_Parser_t parser, myopt_Token *token
 							token->Type = T_ERROR;							
 							token->str[i] = '\0';
 							sprintf(strError, "Error: option '%s': there must be no spaces before and after the equal sign\n", token->str);
-							strcat(parser->strErrors, strError);
+							strncat(parser->strErrors, strError, STR_ERRORS_SIZE);
 							token->nNextPos++;
 							return token->Type;
 						}
@@ -143,7 +170,7 @@ myopt_TokenTypeEnum myopt_GetNextToken(myopt_Parser_t parser, myopt_Token *token
 					token->str[i] = '\0';										
 					token->Type = T_ERROR;
 					sprintf(strError, "Error: unrecognized option '%s'\n", token->str);
-					strcat(parser->strErrors, strError);
+					strncat(parser->strErrors, strError, STR_ERRORS_SIZE);
 					return token->Type;
 				}				
 				if ( parser->arrayOptArgs[x].nArgsMin > 0 )
@@ -159,7 +186,7 @@ myopt_TokenTypeEnum myopt_GetNextToken(myopt_Parser_t parser, myopt_Token *token
 				{
 					token->Type = T_ERROR;					
 					sprintf(strError, "Error: unrecognized option '%s'\n", token->str);
-					strcat(parser->strErrors, strError);
+					strncat(parser->strErrors, strError, STR_ERRORS_SIZE);
 					return token->Type;
 				}
 			}
@@ -181,6 +208,15 @@ myopt_TokenTypeEnum myopt_GetNextToken(myopt_Parser_t parser, myopt_Token *token
 			while ( parser->strInput[token->nNextPos] != '"' )
 			{
 				token->str[i++] = parser->strInput[token->nNextPos++];
+				if ( i > MAX_LEN_STR )
+				{
+					token->str[i-1] = '\0';
+					sprintf(strError, "Error: token too long: '%s'.\nMax length is %d.\n", token->str, MAX_LEN_STR);				
+					token->Type = T_ERROR;
+					strncat(parser->strErrors, strError, STR_ERRORS_SIZE);
+					token->nNextPos++;
+					return token->Type;											
+				}				
 			}					
 			token->str[i] = '\0';
 			token->nNextPos++;
@@ -194,6 +230,15 @@ myopt_TokenTypeEnum myopt_GetNextToken(myopt_Parser_t parser, myopt_Token *token
 				while ( !myopt_IsSeparator(parser->strInput[token->nNextPos]) && parser->strInput[token->nNextPos + 1] != '\0' )
 				{
 					token->str[i++] = parser->strInput[token->nNextPos++];
+					if ( i > MAX_LEN_STR )
+					{
+						token->str[i-1] = '\0';
+						sprintf(strError, "Error: token too long: '%s'.\nMax length is %d.\n", token->str, MAX_LEN_STR);				
+						token->Type = T_ERROR;
+						strncat(parser->strErrors, strError, STR_ERRORS_SIZE);
+						token->nNextPos++;
+						return token->Type;											
+					}					
 				}				
 			}
 			else
@@ -204,7 +249,7 @@ myopt_TokenTypeEnum myopt_GetNextToken(myopt_Parser_t parser, myopt_Token *token
 				{						
 					token->Type = T_ERROR;					
 					sprintf(strError, "Error: unrecognized option '-%c'\n", parser->strInput[token->nNextPos]);
-					strcat(parser->strErrors, strError);
+					strncat(parser->strErrors, strError, STR_ERRORS_SIZE);
 					token->nNextPos++;
 					return token->Type;
 				}
@@ -212,7 +257,25 @@ myopt_TokenTypeEnum myopt_GetNextToken(myopt_Parser_t parser, myopt_Token *token
 					token->bShortOptionState = false;
 				
 				token->str[i++] = '-';
+				if ( i > MAX_LEN_STR )
+				{
+					token->str[i-1] = '\0';
+					sprintf(strError, "Error: token too long: '%s'.\nMax length is %d.\n", token->str, MAX_LEN_STR);				
+					token->Type = T_ERROR;
+					strncat(parser->strErrors, strError, STR_ERRORS_SIZE);
+					token->nNextPos++;
+					return token->Type;											
+				}				
 				token->str[i++] = parser->strInput[token->nNextPos++];
+				if ( i > MAX_LEN_STR )
+				{
+					token->str[i-1] = '\0';
+					sprintf(strError, "Error: token too long: '%s'.\nMax length is %d.\n", token->str, MAX_LEN_STR);				
+					token->Type = T_ERROR;
+					strncat(parser->strErrors, strError, STR_ERRORS_SIZE);
+					token->nNextPos++;
+					return token->Type;											
+				}				
 			}
 			
 			token->str[i] = '\0';
