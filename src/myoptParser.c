@@ -356,7 +356,7 @@ int myopt_ArgList(myopt_ParserData *pd)
 		my_continue:
 		if ( pd->m_Token.Type == T_EOL )
 		{
-			free(strOption);
+			/*free(strOption);*/
 			return 1;
 		}
 		switch( pd->m_Token.Type )
@@ -374,7 +374,7 @@ int myopt_ArgList(myopt_ParserData *pd)
 			}
 			if ( x < 0 )
 			{
-				free(strOption);
+				/*free(strOption);*/
 				return 0;
 			}
 			pd->m_Parser->arrayOptArgs[x].countOccurrences++;
@@ -407,7 +407,7 @@ int myopt_ArgList(myopt_ParserData *pd)
 					{
 						strncat(pd->m_Parser->strInternalErrors, "Error: insufficient memory\n", STR_ERRORS_SIZE);
 						pd->m_Parser->countInternalErrors++;
-						free(strOption);
+						/*free(strOption);*/
 						return 0;
 					}
 					pd->m_Parser->arrayOptArgs[x].countArgs++;
@@ -419,7 +419,7 @@ int myopt_ArgList(myopt_ParserData *pd)
 					strncat(pd->m_Parser->strErrors, strError, STR_ERRORS_SIZE);
 					myopt_ArgsListFree(pArgsList);
 					pd->m_Parser->arrayOptArgs[x].listArgs = pArgsList = NULL;
-					free(strOption);
+					/*free(strOption);*/
 					return 0;
 				}
 				pd->m_Parser->arrayOptArgs[x].listArgs = pArgsList;
@@ -447,7 +447,7 @@ int myopt_ArgList(myopt_ParserData *pd)
 						{
 							strncat(pd->m_Parser->strInternalErrors, "Error: insufficient memory\n", STR_ERRORS_SIZE);
 							pd->m_Parser->countInternalErrors++;
-							free(strOption);
+							/*free(strOption);*/
 							return 0;
 						}
 						pd->m_Parser->arrayOptArgs[x].countArgs++;												
@@ -466,7 +466,7 @@ int myopt_ArgList(myopt_ParserData *pd)
 				{
 					strncat(pd->m_Parser->strInternalErrors, "Error: insufficient memory\n", STR_ERRORS_SIZE);
 					pd->m_Parser->countInternalErrors++;
-					free(strOption);
+					/*free(strOption);*/
 					return 0;					
 				}
 				for ( x = pd->m_Parser->countPosArgs; x < pd->m_Parser->countPosArgs + MAX_OPTS; x++)
@@ -489,16 +489,16 @@ int myopt_ArgList(myopt_ParserData *pd)
 			if ( countEndOptions > 1 )
 			{
 				strncat(pd->m_Parser->strErrors, "Error: multiple occurrences of '--'.\n", STR_ERRORS_SIZE);
-				free(strOption);
+				/*free(strOption);*/
 				return 0;
 			}
 			break;
 		case T_ERROR:
-			free(strOption);
+			/*free(strOption);*/
 			return 0;
 		default:
 			strncat(pd->m_Parser->strErrors, "Error: unexpected token.\n", STR_ERRORS_SIZE);
-			free(strOption);
+			/*free(strOption);*/
 			return 0;
 		}		
 		
