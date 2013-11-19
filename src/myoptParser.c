@@ -327,8 +327,8 @@ int myopt_Match(myopt_TokenTypeEnum ExpectedToken, myopt_ParserData *pd)
 int myopt_ArgList(myopt_ParserData *pd)
 {
 	char strError[1024];	
-	/* char strOption[MAX_LEN_STR]; */
-	char *strOption = NULL;
+	char strOption[MAX_LEN_STR];
+	/* char *strOption = NULL; */
 	int countEndOptions = 0;
 	int x, y;
 	myopt_ArgsList* pArgsList = NULL;
@@ -338,12 +338,14 @@ int myopt_ArgList(myopt_ParserData *pd)
 	len = strlen(pd->m_Token.str);
 	/* printf("\n\npd->m_Token.str: %d %s\n\n", len, pd->m_Token.str); */
 	
+	/*
 	strOption = (char*)malloc(sizeof(char) * len + 1);
 	if ( !strOption )
 	{
 		printf("Errore myopt_ArgList: memoria insufficiente.\n");
 		return 0;
 	}
+	*/
 	
 	while ( pd->m_Token.Type == T_SHORT ||
 			pd->m_Token.Type == T_LONG ||
@@ -503,7 +505,11 @@ int myopt_ArgList(myopt_ParserData *pd)
 		myopt_GetNextToken(pd->m_Parser, &(pd->m_Token));
 	}
 
-	free(strOption);
+	/*
+	if ( strOption != NULL )
+		free(strOption);
+	*/
+		
 	return 1;
 }
 
