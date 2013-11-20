@@ -45,6 +45,10 @@
 #define STR_ERRORS_SIZE 8192
 #define OR_MORE -1
 
+#define ERRMSG_INSUFFICIENT_MEMORY "Error: insufficient memory\n"
+#define MSG_GROUP "Group %d"
+#define MSG_TOKEN_TOO_LONG "Error: token too long: '%s'.\nMax length is %d.\n"
+
 
 #include <stdio.h>
 #include <stdlib.h>  
@@ -53,6 +57,9 @@
 #include <math.h>
 #include <malloc.h>
 #include <stdint.h>
+#include <libintl.h>
+#include <locale.h>
+
 
 #ifdef HAVE_STDBOOL_H
 # include <stdbool.h>

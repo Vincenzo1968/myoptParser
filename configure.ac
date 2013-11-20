@@ -21,10 +21,14 @@ AM_MAINTAINER_MODE
 #AC_PROG_CXX
 AC_PROG_CC
 
+# Gettext init
+AM_GNU_GETTEXT_VERSION([0.18.3])
+AM_GNU_GETTEXT([external])
+
 # Checks for libraries.
 
 # Checks for header files.
-AC_CHECK_HEADERS([malloc.h stdint.h stdlib.h string.h])
+AC_CHECK_HEADERS([malloc.h stdint.h stdlib.h string.h libintl.h locale.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 #AC_CHECK_HEADER_STDBOOL
@@ -36,6 +40,7 @@ AC_TYPE_UINT32_T
 # Checks for library functions.
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
+AC_CHECK_FUNCS([setlocale])
 
-AC_CONFIG_FILES([Makefile src/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile po/Makefile.in])
 AC_OUTPUT

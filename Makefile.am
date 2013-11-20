@@ -1,4 +1,4 @@
 AUTOMAKE_OPTIONS = gnu
-SUBDIRS = src
+SUBDIRS = po src
 ACLOCAL_AMFLAGS = -I m4
-EXTRA_DIST = examples Images
+EXTRA_DIST = build-aux/config.rpath  examples Images

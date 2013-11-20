@@ -180,7 +180,7 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 		countOptionsOfGroup = (int*)malloc(sizeof(int) * md.m_Parser->countGroups);
 		if ( !countOptionsOfGroup )
 		{
-			strncat(md.m_Parser->strInternalErrors, "Error: insufficient memory.\n", STR_ERRORS_SIZE);
+			strncat(md.m_Parser->strInternalErrors, gettext(ERRMSG_INSUFFICIENT_MEMORY), STR_ERRORS_SIZE);
 			md.m_Parser->countInternalErrors++;
 			return 0;
 		}
@@ -200,7 +200,7 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 			if ( md.m_Parser->arrayOptArgs[x].countOccurrences > 1 && md.m_Parser->arrayOptArgs[x].eMob == MOB_ERROR )
 			{
 				ret = 0;
-				sprintf(strError, "Error: multiple occurrences(%d) of '%s' option.\n", md.m_Parser->arrayOptArgs[x].countOccurrences, strOptionName);
+				sprintf(strError, gettext("Error: multiple occurrences(%d) of '%s' option.\n"), md.m_Parser->arrayOptArgs[x].countOccurrences, strOptionName);
 				strncat(md.m_Parser->strErrors, strError, STR_ERRORS_SIZE);
 			}				
 			
@@ -211,7 +211,7 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 					if ( md.m_Parser->arrayOptArgs[x].eMob != MOB_APPEND )
 					{
 						ret = 0;
-						sprintf(strError, "Error: option %s: wrong number of arguments: must be %d; found %d.\n", strOptionName, md.m_Parser->arrayOptArgs[x].nArgsMin, md.m_Parser->arrayOptArgs[x].countArgs);
+						sprintf(strError, gettext("Error: option %s: wrong number of arguments: must be %d; found %d.\n"), strOptionName, md.m_Parser->arrayOptArgs[x].nArgsMin, md.m_Parser->arrayOptArgs[x].countArgs);
 						strncat(md.m_Parser->strErrors, strError, STR_ERRORS_SIZE);
 					}
 				}
@@ -224,7 +224,7 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 					if ( md.m_Parser->arrayOptArgs[x].countArgs < md.m_Parser->arrayOptArgs[x].nArgsMin || md.m_Parser->arrayOptArgs[x].countArgs > nArgsMax )
 					{
 						ret = 0;
-						sprintf(strError, "Error: option %s: wrong number of arguments: must be between %d and %d; found %d.\n", strOptionName, md.m_Parser->arrayOptArgs[x].nArgsMin, md.m_Parser->arrayOptArgs[x].nArgsMax, md.m_Parser->arrayOptArgs[x].countArgs);
+						sprintf(strError, gettext("Error: option %s: wrong number of arguments: must be between %d and %d; found %d.\n"), strOptionName, md.m_Parser->arrayOptArgs[x].nArgsMin, md.m_Parser->arrayOptArgs[x].nArgsMax, md.m_Parser->arrayOptArgs[x].countArgs);
 						strncat(md.m_Parser->strErrors, strError, STR_ERRORS_SIZE);
 					}
 				}
@@ -233,7 +233,7 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 			if ( md.m_Parser->arrayOptArgs[x].countOccurrences < 1 && md.m_Parser->arrayOptArgs[x].bRequired )
 			{
 				ret = 0;
-				sprintf(strError, "Error: option '-%c --%s' is required.\n", md.m_Parser->arrayOptArgs[x].shortName, md.m_Parser->arrayOptArgs[x].longName);
+				sprintf(strError, gettext("Error: option '-%c --%s' is required.\n"), md.m_Parser->arrayOptArgs[x].shortName, md.m_Parser->arrayOptArgs[x].longName);
 				strncat(md.m_Parser->strErrors, strError, STR_ERRORS_SIZE);
 			}
 			
@@ -242,7 +242,7 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 				md.m_Parser->arrayOptArgs[x].arrayArgs = (myopt_Argument*)malloc(sizeof(myopt_Argument) * md.m_Parser->arrayOptArgs[x].countArgs);
 				if ( !(md.m_Parser->arrayOptArgs[x].arrayArgs) )
 				{
-					strncat(md.m_Parser->strInternalErrors, "Error: insufficient memory\n", STR_ERRORS_SIZE);
+					strncat(md.m_Parser->strInternalErrors, gettext(ERRMSG_INSUFFICIENT_MEMORY), STR_ERRORS_SIZE);
 					md.m_Parser->countInternalErrors++;
 					ret = 0;
 					break;
@@ -272,13 +272,13 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 			if ( countOptionsOfGroup[x] == 0 && md.m_Parser->arrayGroups[x].bRequired == true )
 			{
 				ret = 0;
-				sprintf(strError, "Error: must be present at least one option of group %d '%s'.\n", x, md.m_Parser->arrayGroups[x].strDescription);
+				sprintf(strError, gettext("Error: must be present at least one option of group %d '%s'.\n"), x, md.m_Parser->arrayGroups[x].strDescription);
 				strncat(md.m_Parser->strErrors, strError, STR_ERRORS_SIZE);							
 			}
 			else if ( countOptionsOfGroup[x] > 1 && md.m_Parser->arrayGroups[x].bMutuallyExclusive == true )
 			{
 				ret = 0;
-				sprintf(strError, "Error: there is more than one option for the mutually exclusive group %d '%s'. It is allowed only one.\n", x, md.m_Parser->arrayGroups[x].strDescription);
+				sprintf(strError, gettext("Error: there is more than one option for the mutually exclusive group %d '%s'. It is allowed only one.\n"), x, md.m_Parser->arrayGroups[x].strDescription);
 				strncat(md.m_Parser->strErrors, strError, STR_ERRORS_SIZE);
 			}			
 		}
@@ -288,20 +288,20 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 		if ( md.m_Parser->nPosArgsMin == md.m_Parser->nPosArgsMax && md.m_Parser->nPosArgsMin != md.m_Parser->countPosArgs )
 		{
 			ret = 0;
-			sprintf(strError, "Error: wrong number of positional arguments: must be %d; found %d.\n", md.m_Parser->nPosArgsMin, md.m_Parser->countPosArgs);
+			sprintf(strError, gettext("Error: wrong number of positional arguments: must be %d; found %d.\n"), md.m_Parser->nPosArgsMin, md.m_Parser->countPosArgs);
 			strncat(md.m_Parser->strErrors, strError, STR_ERRORS_SIZE);			
 		}		
 		else if ( md.m_Parser->nPosArgsMin < md.m_Parser->nPosArgsMax /*&& md.m_Parser.countPosArgs > 1*/ )
 		{
 			if ( md.m_Parser->countPosArgs < md.m_Parser->nPosArgsMin || md.m_Parser->countPosArgs > md.m_Parser->nPosArgsMax )
 			ret = 0;
-			sprintf(strError, "Error: wrong number of positional arguments: must be between %d and %d; found %d.\n", md.m_Parser->nPosArgsMin, md.m_Parser->nPosArgsMax, md.m_Parser->countPosArgs);
+			sprintf(strError, gettext("Error: wrong number of positional arguments: must be between %d and %d; found %d.\n"), md.m_Parser->nPosArgsMin, md.m_Parser->nPosArgsMax, md.m_Parser->countPosArgs);
 			strncat(md.m_Parser->strErrors, strError, STR_ERRORS_SIZE);
 		}
 		else if ( md.m_Parser->countPosArgs < md.m_Parser->nPosArgsMin ) /* md.m_Parser->nPosArgsMin == OR_MORE */
 		{
 			ret = 0;
-			sprintf(strError, "Error: wrong number of positional arguments: must be at least %d; found %d.\n", md.m_Parser->nPosArgsMin, md.m_Parser->countPosArgs);
+			sprintf(strError, gettext("Error: wrong number of positional arguments: must be at least %d; found %d.\n"), md.m_Parser->nPosArgsMin, md.m_Parser->countPosArgs);
 			strncat(md.m_Parser->strErrors, strError, STR_ERRORS_SIZE);
 		}
 				
@@ -327,12 +327,14 @@ int myopt_Match(myopt_TokenTypeEnum ExpectedToken, myopt_ParserData *pd)
 int myopt_ArgList(myopt_ParserData *pd)
 {
 	char strError[1024];	
-	/*char strOption[MAX_LEN_STR];*/
-	char *strOption = NULL;
+	char strOption[MAX_LEN_STR + 1];
+	/* char *strOption = NULL; */
 	int countEndOptions = 0;
 	int x, y;
 	myopt_ArgsList* pArgsList = NULL;
 	myopt_ArgsList argument;
+	
+	/*
 	int len;
 	
 	len = strlen(pd->m_Token.str);
@@ -340,9 +342,10 @@ int myopt_ArgList(myopt_ParserData *pd)
 	strOption = (char*)malloc(sizeof(char) * len + 1);
 	if ( !strOption )
 	{
-		printf("Errore myopt_ArgList: memoria insufficiente.\n");
+		printf(gettext(ERRMSG_INSUFFICIENT_MEMORY));
 		return 0;
 	}
+	*/
 	
 	while ( pd->m_Token.Type == T_SHORT ||
 			pd->m_Token.Type == T_LONG ||
@@ -353,8 +356,10 @@ int myopt_ArgList(myopt_ParserData *pd)
 		my_continue:
 		if ( pd->m_Token.Type == T_EOL )
 		{
+			/*
 			free(strOption);
 			strOption = NULL;
+			*/
 			return 1;
 		}
 		switch( pd->m_Token.Type )
@@ -372,8 +377,10 @@ int myopt_ArgList(myopt_ParserData *pd)
 			}
 			if ( x < 0 )
 			{
+				/*
 				free(strOption);
 				strOption = NULL;
+				*/
 				return 0;
 			}
 			pd->m_Parser->arrayOptArgs[x].countOccurrences++;
@@ -404,10 +411,12 @@ int myopt_ArgList(myopt_ParserData *pd)
 					pArgsList = myopt_ArgsListAppend(&argument, pArgsList);
 					if ( pArgsList == NULL )
 					{
-						strncat(pd->m_Parser->strInternalErrors, "Error: insufficient memory\n", STR_ERRORS_SIZE);
+						strncat(pd->m_Parser->strInternalErrors, gettext(ERRMSG_INSUFFICIENT_MEMORY), STR_ERRORS_SIZE);
 						pd->m_Parser->countInternalErrors++;
+						/*
 						free(strOption);
 						strOption = NULL;
+						*/
 						return 0;
 					}
 					pd->m_Parser->arrayOptArgs[x].countArgs++;
@@ -415,12 +424,14 @@ int myopt_ArgList(myopt_ParserData *pd)
 				}
 				if ( pd->m_Parser->arrayOptArgs[x].countArgs < pd->m_Parser->arrayOptArgs[x].nArgsMin )
 				{
-					sprintf(strError, "Error: option %s: wrong number of arguments: must be almost %d; found %d.\n", strOption, pd->m_Parser->arrayOptArgs[x].nArgsMin, pd->m_Parser->arrayOptArgs[x].countArgs);
+					sprintf(strError, gettext("Error: option %s: wrong number of arguments: must be almost %d; found %d.\n"), strOption, pd->m_Parser->arrayOptArgs[x].nArgsMin, pd->m_Parser->arrayOptArgs[x].countArgs);
 					strncat(pd->m_Parser->strErrors, strError, STR_ERRORS_SIZE);
 					myopt_ArgsListFree(pArgsList);
 					pd->m_Parser->arrayOptArgs[x].listArgs = pArgsList = NULL;
+					/*
 					free(strOption);
 					strOption = NULL;
+					*/
 					return 0;
 				}
 				pd->m_Parser->arrayOptArgs[x].listArgs = pArgsList;
@@ -446,10 +457,12 @@ int myopt_ArgList(myopt_ParserData *pd)
 						pArgsList = myopt_ArgsListAppend(&argument, pArgsList);
 						if ( pArgsList == NULL )
 						{
-							strncat(pd->m_Parser->strInternalErrors, "Error: insufficient memory\n", STR_ERRORS_SIZE);
+							strncat(pd->m_Parser->strInternalErrors, gettext(ERRMSG_INSUFFICIENT_MEMORY), STR_ERRORS_SIZE);
 							pd->m_Parser->countInternalErrors++;
+							/*
 							free(strOption);
 							strOption = NULL;
+							*/
 							return 0;
 						}
 						pd->m_Parser->arrayOptArgs[x].countArgs++;												
@@ -466,10 +479,12 @@ int myopt_ArgList(myopt_ParserData *pd)
 				pd->m_Parser->arrayPosArgs = (myopt_Argument*)realloc(pd->m_Parser->arrayPosArgs, (sizeof(myopt_Argument) * pd->m_Parser->countPosArgs) + MAX_OPTS);
 				if ( !(pd->m_Parser->arrayPosArgs) )
 				{
-					strncat(pd->m_Parser->strInternalErrors, "Error: insufficient memory\n", STR_ERRORS_SIZE);
+					strncat(pd->m_Parser->strInternalErrors, gettext(ERRMSG_INSUFFICIENT_MEMORY), STR_ERRORS_SIZE);
 					pd->m_Parser->countInternalErrors++;
+					/*
 					free(strOption);
 					strOption = NULL;
+					*/
 					return 0;					
 				}
 				for ( x = pd->m_Parser->countPosArgs; x < pd->m_Parser->countPosArgs + MAX_OPTS; x++)
@@ -491,28 +506,36 @@ int myopt_ArgList(myopt_ParserData *pd)
 			countEndOptions++;
 			if ( countEndOptions > 1 )
 			{
-				strncat(pd->m_Parser->strErrors, "Error: multiple occurrences of '--'.\n", STR_ERRORS_SIZE);
+				strncat(pd->m_Parser->strErrors, gettext("Error: multiple occurrences of '--'.\n"), STR_ERRORS_SIZE);
+				/*
 				free(strOption);
 				strOption = NULL;
+				*/
 				return 0;
 			}
 			break;
 		case T_ERROR:
+			/*
 			free(strOption);
 			strOption = NULL;
+			*/
 			return 0;
 		default:
-			strncat(pd->m_Parser->strErrors, "Error: unexpected token.\n", STR_ERRORS_SIZE);
+			strncat(pd->m_Parser->strErrors, gettext("Error: unexpected token.\n"), STR_ERRORS_SIZE);
+			/*
 			free(strOption);
 			strOption = NULL;
+			*/
 			return 0;
 		}		
 		
 		myopt_GetNextToken(pd->m_Parser, &(pd->m_Token));
 	}
 
+	/*
 	if ( strOption != NULL )
 		free(strOption);
+	*/
 		
 	return 1;
 }
@@ -712,9 +735,9 @@ int myopt_CheckTypes(myopt_ParserData *pd, myopt_Argument arrayArgs[], int32_t c
 			else
 			{
 				if ( strOptName == NULL || 	strlen(strOptName) == 0 )
-					sprintf(strError, "Error: positional argument %d wrong type. Must be %s; found %s: '%s'\n", x + 1, strType1, strType2, arrayArgs[x].strValue);
+					sprintf(strError, gettext("Error: positional argument %d wrong type. Must be %s; found %s: '%s'\n"), x + 1, strType1, strType2, arrayArgs[x].strValue);
 				else
-					sprintf(strError, "Error: option '%s': argument %d wrong type. Must be %s; found %s: '%s'\n", strOptName, x + 1, strType1, strType2, arrayArgs[x].strValue);
+					sprintf(strError, gettext("Error: option '%s': argument %d wrong type. Must be %s; found %s: '%s'\n"), strOptName, x + 1, strType1, strType2, arrayArgs[x].strValue);
 				strncat(pd->m_Parser->strErrors, strError, STR_ERRORS_SIZE);
 				ret = 0;
 			}

@@ -36,6 +36,15 @@ myopt_Parser_t myopt_InitParser()
 	int x;
 	myopt_Parser_t parser = NULL;
 	
+	setlocale(LC_ALL, "");
+	
+	printf("\nInitParser : PACKAGE: %s LOCALEDIR: %s\n", PACKAGE, LOCALEDIR);
+ 
+/* #ifdef ENABLE_NLS */
+	bindtextdomain(PACKAGE, LOCALEDIR);
+	textdomain(PACKAGE);
+/* #endif */
+	
 	parser = (myopt_Parser_t)malloc(sizeof(struct _myopt_Parser_t));
 	if ( !parser )
 		return NULL;
@@ -232,7 +241,7 @@ int32_t myopt_AddGroup(myopt_Parser_t parser, const char *strDescription, bool b
 			
 	if ( !parser )
 	{
-		sprintf(strError, "Invalid call myopt_AddGroup(%s): argument 'parser' is NULL\n", strDescription);
+		sprintf(strError, gettext("Invalid call myopt_AddGroup(%s): argument 'parser' is NULL\n"), strDescription);
 		strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE);
 		parser->countInternalErrors++;
 		return -1;
@@ -245,7 +254,7 @@ int32_t myopt_AddGroup(myopt_Parser_t parser, const char *strDescription, bool b
 		parser->arrayGroups = (myopt_Group*)realloc(parser->arrayGroups, (sizeof(myopt_Group) * parser->countGroups) + MAX_OPTS);
 		if ( !(parser->arrayGroups) )
 		{
-			strncat(parser->strInternalErrors, "Error: insufficient memory\n", STR_ERRORS_SIZE);
+			strncat(parser->strInternalErrors, gettext(ERRMSG_INSUFFICIENT_MEMORY), STR_ERRORS_SIZE);
 			parser->countInternalErrors++;
 			return -1;				
 		}
@@ -258,7 +267,7 @@ int32_t myopt_AddGroup(myopt_Parser_t parser, const char *strDescription, bool b
 	}
 	
 	if ( strDescription == NULL || strlen(strDescription) == 0 )
-		sprintf(parser->arrayGroups[parser->countGroups].strDescription, "Group %d", parser->countGroups);
+		sprintf(parser->arrayGroups[parser->countGroups].strDescription, gettext(MSG_GROUP), parser->countGroups);
 	else
 		strncpy(parser->arrayGroups[parser->countGroups].strDescription, strDescription, MAX_LEN_STR);
 
@@ -292,21 +301,21 @@ bool myopt_AddOption(myopt_Parser_t parser,
 	
 	if ( !myopt_MakeOptionName(shortName, longName, strOptionName) )
 	{
-		strncat(parser->strInternalErrors, "Error: must be specified at least one of shortName and longName\n", STR_ERRORS_SIZE);
+		strncat(parser->strInternalErrors, gettext("Error: must be specified at least one of shortName and longName\n"), STR_ERRORS_SIZE);
 		parser->countInternalErrors++;
 		return false;
 	}
 		
 	if ( !parser )
 	{
-		sprintf(strError, "Invalid call myopt_AddOption(%s): argument 'parser' is NULL\n", strOptionName);
+		sprintf(strError, gettext("Invalid call myopt_AddOption(%s): argument 'parser' is NULL\n"), strOptionName);
 		strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE);
 		return false;
 	}
 		
 	if ( idGroup < 0 || idGroup >= parser->countGroups )
 	{
-		sprintf(strError, "Invalid call myopt_AddOption(%s): idGroup %d not valid.\n", strOptionName, idGroup);
+		sprintf(strError, gettext("Invalid call myopt_AddOption(%s): idGroup %d not valid.\n"), strOptionName, idGroup);
 		strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE);
 		parser->countInternalErrors++;
 		return false;
@@ -317,7 +326,7 @@ bool myopt_AddOption(myopt_Parser_t parser,
 		parser->arrayOptArgs = (myopt_Option*)realloc(parser->arrayOptArgs, (sizeof(myopt_Option) * parser->countOptArgs) + MAX_OPTS);
 		if ( !(parser->arrayOptArgs) )
 		{
-			strncat(parser->strInternalErrors, "Error: insufficient memory\n", STR_ERRORS_SIZE);
+			strncat(parser->strInternalErrors, gettext(ERRMSG_INSUFFICIENT_MEMORY), STR_ERRORS_SIZE);
 			parser->countInternalErrors++;
 			return false;				
 		}
@@ -337,7 +346,7 @@ bool myopt_AddOption(myopt_Parser_t parser,
 	
 	if ( shortName == 0 && longName == NULL )
 	{
-		sprintf(strError, "Invalid call myopt_AddOption(%s): must be specified one of shortName and longName\n", strOptionName);
+		sprintf(strError, gettext("Invalid call myopt_AddOption(%s): must be specified one of shortName and longName\n"), strOptionName);
 		strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE);
 		parser->countInternalErrors++;		
 		return false;		
@@ -347,7 +356,7 @@ bool myopt_AddOption(myopt_Parser_t parser,
 	{
 		if ( myopt_LookupShort(parser, shortName) >= 0 )
 		{
-			sprintf(strError, "Invalid call myopt_AddOption(%s): the option is already present in the symbol table\n", strOptionName);
+			sprintf(strError, gettext("Invalid call myopt_AddOption(%s): the option is already present in the symbol table\n"), strOptionName);
 			strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE);
 			parser->countInternalErrors++;		
 			return false;
@@ -371,7 +380,7 @@ bool myopt_AddOption(myopt_Parser_t parser,
 		/* if ( myopt_LookupLong(parser, longName) >= 0 ) */
 		if ( myopt_FindLong(parser, longName) >= 0 )
 		{
-			sprintf(strError, "Invalid call myopt_AddOption(%s): the option is already present in the symbol table\n", strOptionName);
+			sprintf(strError, gettext("Invalid call myopt_AddOption(%s): the option is already present in the symbol table\n"), strOptionName);
 			strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE);
 			parser->countInternalErrors++;					
 			return false;
@@ -597,7 +606,7 @@ ciclo:
 			ret = true;
 		else
 		{
-			sprintf(strError, "'%s': wrong type spec: '%s' in strTypes '%s'\n", strOptionName, str, strTypes);
+			sprintf(strError, gettext("'%s': wrong type spec: '%s' in strTypes '%s'\n"), strOptionName, str, strTypes);
 			strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE);
 			parser->countInternalErrors++;
 			return false;
@@ -645,7 +654,7 @@ uint32_t myopt_MakeArgumentOptionHelp(myopt_Parser_t parser, uint32_t index, con
 	
 	if ( !(parser->arrayOptArgs[index].nArgsMin == 0 && parser->arrayOptArgs[index].nArgsMax == 0) )
 	{
-		strncat(strHelp, "   Arguments for option '", STR_ERRORS_SIZE);
+		strncat(strHelp, gettext("   Arguments for option '"), STR_ERRORS_SIZE);
 		strncat(strHelp, strOptionName, STR_ERRORS_SIZE);
 		strncat(strHelp, "': ", STR_ERRORS_SIZE);
 		
@@ -653,24 +662,24 @@ uint32_t myopt_MakeArgumentOptionHelp(myopt_Parser_t parser, uint32_t index, con
 		{
 			if ( parser->arrayOptArgs[index].nArgsMin == 0 )
 			{
-				strncat(strHelp, "zero or more", STR_ERRORS_SIZE);
+				strncat(strHelp, gettext("zero or more"), STR_ERRORS_SIZE);
 			}
 			else if ( parser->arrayOptArgs[index].nArgsMin == 1 )
 			{
-				strncat(strHelp, "one or more", STR_ERRORS_SIZE);
+				strncat(strHelp, gettext("one or more"), STR_ERRORS_SIZE);
 			}
 			else
 			{
-				sprintf(strTemp, "%d or more", parser->arrayOptArgs[index].nArgsMin);
+				sprintf(strTemp, gettext("%d or more"), parser->arrayOptArgs[index].nArgsMin);
 				strncat(strHelp, strTemp, STR_ERRORS_SIZE);
 			}		
 		}
 		else
 		{
 			if ( parser->arrayOptArgs[index].nArgsMin != parser->arrayOptArgs[index].nArgsMax )			
-				sprintf(strTemp, "between %d and %d", parser->arrayOptArgs[index].nArgsMin, parser->arrayOptArgs[index].nArgsMax);
+				sprintf(strTemp, gettext("between %d and %d"), parser->arrayOptArgs[index].nArgsMin, parser->arrayOptArgs[index].nArgsMax);
 			else
-				sprintf(strTemp, "exactly %d", parser->arrayOptArgs[index].nArgsMin);
+				sprintf(strTemp, gettext("exactly %d"), parser->arrayOptArgs[index].nArgsMin);
 			strncat(strHelp, strTemp, STR_ERRORS_SIZE);
 		}
 		
@@ -692,11 +701,11 @@ void myopt_MakeUsageString(myopt_Parser_t parser)
 	if ( !parser )
 		return;
 		
-	strncat(parser->strUsage, "Usage:\n", STR_ERRORS_SIZE);
+	strncat(parser->strUsage, gettext("Usage:\n"), STR_ERRORS_SIZE);
 	strncat(parser->strUsage, parser->strExeName, STR_ERRORS_SIZE);
 	
 	if ( parser->countOptArgs > 0 )
-		strncat(parser->strUsage, " Options", STR_ERRORS_SIZE);
+		strncat(parser->strUsage, gettext(" Options"), STR_ERRORS_SIZE);
 	
 	if ( !(parser->nPosArgsMin == 0 && parser->nPosArgsMax == 0) )
 	{
@@ -707,24 +716,24 @@ void myopt_MakeUsageString(myopt_Parser_t parser)
 		{
 			if ( parser->nPosArgsMin == 0 )
 			{
-				strncat(parser->strUsage, "(zero or more)", STR_ERRORS_SIZE);
+				strncat(parser->strUsage, gettext("(zero or more)"), STR_ERRORS_SIZE);
 			}
 			else if ( parser->nPosArgsMin == 1 )
 			{
-				strncat(parser->strUsage, "(one or more)", STR_ERRORS_SIZE);
+				strncat(parser->strUsage, gettext("(one or more)"), STR_ERRORS_SIZE);
 			}
 			else
 			{
-				sprintf(strTemp, "(%d or more)", parser->nPosArgsMin);
+				sprintf(strTemp, gettext("(%d or more)"), parser->nPosArgsMin);
 				strncat(parser->strUsage, strTemp, STR_ERRORS_SIZE);
 			}		
 		}
 		else
 		{
 			if ( parser->nPosArgsMin != parser->nPosArgsMax )
-				sprintf(strTemp, "(between %d and %d)", parser->nPosArgsMin, parser->nPosArgsMax);
+				sprintf(strTemp, gettext("(between %d and %d)"), parser->nPosArgsMin, parser->nPosArgsMax);
 			else
-				sprintf(strTemp, "(exactly %d)", parser->nPosArgsMin);
+				sprintf(strTemp, gettext("(exactly %d)"), parser->nPosArgsMin);
 			
 			strncat(parser->strUsage, strTemp, STR_ERRORS_SIZE);			
 		}
@@ -736,7 +745,7 @@ void myopt_MakeUsageString(myopt_Parser_t parser)
 	}
 
 	if ( parser->countOptArgs > 0 )
-		strncat(parser->strUsage, "\nOptions:\n", STR_ERRORS_SIZE);
+		strncat(parser->strUsage, gettext("\nOptions:\n"), STR_ERRORS_SIZE);
 	
 	for ( x = 0; x < parser->countGroups; x++ )
 	{
@@ -744,19 +753,19 @@ void myopt_MakeUsageString(myopt_Parser_t parser)
 		
 		if ( parser->countGroups > 1 )
 		{
-			sprintf(strTemp, "Group[%d]: %s:\n", x, parser->arrayGroups[x].strDescription);
+			sprintf(strTemp, gettext("Group[%d]: %s:\n"), x, parser->arrayGroups[x].strDescription);
 			strncat(parser->strUsage, strTemp, STR_ERRORS_SIZE);
 		}
 			
 		if ( parser->arrayGroups[x].bMutuallyExclusive && parser->arrayGroups[x].bRequired )
 		{
 			bGroupFree = 0;
-			strncat(parser->strUsage, "Only one of:\n", STR_ERRORS_SIZE);
+			strncat(parser->strUsage, gettext("Only one of:\n"), STR_ERRORS_SIZE);
 		}
 		
 		if ( parser->arrayGroups[x].bRequired && !parser->arrayGroups[x].bMutuallyExclusive )
 		{
-			strncat(parser->strUsage, "At least one of:\n", STR_ERRORS_SIZE);
+			strncat(parser->strUsage, gettext("At least one of:\n"), STR_ERRORS_SIZE);
 		}
 			
 		for ( y = 0; y < parser->countOptArgs; y++ )
@@ -770,9 +779,9 @@ void myopt_MakeUsageString(myopt_Parser_t parser)
 				if ( bGroupFree )
 				{
 					if ( parser->arrayOptArgs[y].bRequired )
-						strncat(parser->strUsage, " (required)", STR_ERRORS_SIZE);
+						strncat(parser->strUsage, gettext(" (required)"), STR_ERRORS_SIZE);
 					else
-						strncat(parser->strUsage, " (optional)", STR_ERRORS_SIZE);
+						strncat(parser->strUsage, gettext(" (optional)"), STR_ERRORS_SIZE);
 				}
 				strncat(parser->strUsage, "\t", STR_ERRORS_SIZE);
 				strncat(parser->strUsage, parser->arrayOptArgs[y].strDescription, STR_ERRORS_SIZE);
