@@ -327,8 +327,8 @@ int myopt_Match(myopt_TokenTypeEnum ExpectedToken, myopt_ParserData *pd)
 int myopt_ArgList(myopt_ParserData *pd)
 {
 	char strError[1024];	
-	char strOption[MAX_LEN_STR];
-	/* char *strOption = NULL; */
+	/*char strOption[MAX_LEN_STR];*/
+	char *strOption = NULL;
 	int countEndOptions = 0;
 	int x, y;
 	myopt_ArgsList* pArgsList = NULL;
@@ -336,16 +336,13 @@ int myopt_ArgList(myopt_ParserData *pd)
 	int len;
 	
 	len = strlen(pd->m_Token.str);
-	/* printf("\n\npd->m_Token.str: %d %s\n\n", len, pd->m_Token.str); */
 	
-	/*
 	strOption = (char*)malloc(sizeof(char) * len + 1);
 	if ( !strOption )
 	{
 		printf("Errore myopt_ArgList: memoria insufficiente.\n");
 		return 0;
 	}
-	*/
 	
 	while ( pd->m_Token.Type == T_SHORT ||
 			pd->m_Token.Type == T_LONG ||
@@ -356,7 +353,8 @@ int myopt_ArgList(myopt_ParserData *pd)
 		my_continue:
 		if ( pd->m_Token.Type == T_EOL )
 		{
-			/*free(strOption);*/
+			free(strOption);
+			strOption = NULL;
 			return 1;
 		}
 		switch( pd->m_Token.Type )
@@ -374,7 +372,8 @@ int myopt_ArgList(myopt_ParserData *pd)
 			}
 			if ( x < 0 )
 			{
-				/*free(strOption);*/
+				free(strOption);
+				strOption = NULL;
 				return 0;
 			}
 			pd->m_Parser->arrayOptArgs[x].countOccurrences++;
@@ -407,7 +406,8 @@ int myopt_ArgList(myopt_ParserData *pd)
 					{
 						strncat(pd->m_Parser->strInternalErrors, "Error: insufficient memory\n", STR_ERRORS_SIZE);
 						pd->m_Parser->countInternalErrors++;
-						/*free(strOption);*/
+						free(strOption);
+						strOption = NULL;
 						return 0;
 					}
 					pd->m_Parser->arrayOptArgs[x].countArgs++;
@@ -419,7 +419,8 @@ int myopt_ArgList(myopt_ParserData *pd)
 					strncat(pd->m_Parser->strErrors, strError, STR_ERRORS_SIZE);
 					myopt_ArgsListFree(pArgsList);
 					pd->m_Parser->arrayOptArgs[x].listArgs = pArgsList = NULL;
-					/*free(strOption);*/
+					free(strOption);
+					strOption = NULL;
 					return 0;
 				}
 				pd->m_Parser->arrayOptArgs[x].listArgs = pArgsList;
@@ -447,7 +448,8 @@ int myopt_ArgList(myopt_ParserData *pd)
 						{
 							strncat(pd->m_Parser->strInternalErrors, "Error: insufficient memory\n", STR_ERRORS_SIZE);
 							pd->m_Parser->countInternalErrors++;
-							/*free(strOption);*/
+							free(strOption);
+							strOption = NULL;
 							return 0;
 						}
 						pd->m_Parser->arrayOptArgs[x].countArgs++;												
@@ -466,7 +468,8 @@ int myopt_ArgList(myopt_ParserData *pd)
 				{
 					strncat(pd->m_Parser->strInternalErrors, "Error: insufficient memory\n", STR_ERRORS_SIZE);
 					pd->m_Parser->countInternalErrors++;
-					/*free(strOption);*/
+					free(strOption);
+					strOption = NULL;
 					return 0;					
 				}
 				for ( x = pd->m_Parser->countPosArgs; x < pd->m_Parser->countPosArgs + MAX_OPTS; x++)
@@ -489,26 +492,27 @@ int myopt_ArgList(myopt_ParserData *pd)
 			if ( countEndOptions > 1 )
 			{
 				strncat(pd->m_Parser->strErrors, "Error: multiple occurrences of '--'.\n", STR_ERRORS_SIZE);
-				/*free(strOption);*/
+				free(strOption);
+				strOption = NULL;
 				return 0;
 			}
 			break;
 		case T_ERROR:
-			/*free(strOption);*/
+			free(strOption);
+			strOption = NULL;
 			return 0;
 		default:
 			strncat(pd->m_Parser->strErrors, "Error: unexpected token.\n", STR_ERRORS_SIZE);
-			/*free(strOption);*/
+			free(strOption);
+			strOption = NULL;
 			return 0;
 		}		
 		
 		myopt_GetNextToken(pd->m_Parser, &(pd->m_Token));
 	}
 
-	/*
 	if ( strOption != NULL )
 		free(strOption);
-	*/
 		
 	return 1;
 }
