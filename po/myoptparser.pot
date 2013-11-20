@@ -1,0 +1,238 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: myoptparser 1.0\n"
+"Report-Msgid-Bugs-To: vincenzo.locicero@libero.it\n"
+"POT-Creation-Date: 2013-11-20 14:45+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/myoptSymtab.c:242
+#, c-format
+msgid "Invalid call myopt_AddGroup(%s): argument 'parser' is NULL\n"
+msgstr "Chiamata non valida alla funzione myopt_AddGroup(%s): l'argomento 'parser' è NULL\n"
+
+#: src/myoptSymtab.c:302
+msgid "Error: must be specified at least one of shortName and longName\n"
+msgstr "Errore: deve essere specificato almeno uno tra shortName e longName\n"
+
+#: src/myoptSymtab.c:309
+#, c-format
+msgid "Invalid call myopt_AddOption(%s): argument 'parser' is NULL\n"
+msgstr "Chiamata non valida alla funzione myopt_AddOption(%s): l'argomento 'parser' è NULL\n"
+
+#: src/myoptSymtab.c:316
+#, c-format
+msgid "Invalid call myopt_AddOption(%s): idGroup %d not valid.\n"
+msgstr "Chiamata non valida alla funzione myopt_AddOption(%s): idGroup %d non è valido.\n"
+
+#: src/myoptSymtab.c:347
+#, c-format
+msgid ""
+"Invalid call myopt_AddOption(%s): must be specified one of shortName and "
+"longName\n"
+msgstr "Chiamata non valida alla funzione myopt_AddOption(%s): deve essere specificato uno tra shortName e longName\n"
+
+#: src/myoptSymtab.c:357 src/myoptSymtab.c:381
+#, c-format
+msgid ""
+"Invalid call myopt_AddOption(%s): the option is already present in the "
+"symbol table\n"
+msgstr "Chiamata non valida alla funzione myopt_AddOption(%s): l'opzione è già presente nella tabella dei simboli\n"
+
+#: src/myoptSymtab.c:607
+#, c-format
+msgid "'%s': wrong type spec: '%s' in strTypes '%s'\n"
+msgstr "'%s': tipo non valido: '%s' in strTypes '%s'\n"
+
+#: src/myoptSymtab.c:655
+msgid "   Arguments for option '"
+msgstr "   Argomenti per l'opzione"
+
+#: src/myoptSymtab.c:663
+msgid "zero or more"
+msgstr "zero o più"
+
+#: src/myoptSymtab.c:667
+msgid "one or more"
+msgstr "uno o più"
+
+#: src/myoptSymtab.c:671
+#, c-format
+msgid "%d or more"
+msgstr "%d o più"
+
+#: src/myoptSymtab.c:678
+#, c-format
+msgid "between %d and %d"
+msgstr "tra %d e %d"
+
+#: src/myoptSymtab.c:680
+#, c-format
+msgid "exactly %d"
+msgstr "esattamente %d"
+
+#: src/myoptSymtab.c:702
+msgid "Usage:\n"
+msgstr "Uso:\n"
+
+#: src/myoptSymtab.c:706
+msgid " Options"
+msgstr "Opzioni"
+
+#: src/myoptSymtab.c:717
+msgid "(zero or more)"
+msgstr "(zero o più)"
+
+#: src/myoptSymtab.c:721
+msgid "(one or more)"
+msgstr "(uno o più)"
+
+#: src/myoptSymtab.c:725
+#, c-format
+msgid "(%d or more)"
+msgstr "(%d o più)"
+
+#: src/myoptSymtab.c:732
+#, c-format
+msgid "(between %d and %d)"
+msgstr "(tra %d e %d)"
+
+#: src/myoptSymtab.c:734
+#, c-format
+msgid "(exactly %d)"
+msgstr "(esattamente %d)"
+
+#: src/myoptSymtab.c:746
+msgid ""
+"\n"
+"Options:\n"
+msgstr "\nOpzioni:\n"
+
+#: src/myoptSymtab.c:754
+#, c-format
+msgid "Group[%d]: %s:\n"
+msgstr "Gruppo[%d]: %s\n"
+
+#: src/myoptSymtab.c:761
+msgid "Only one of:\n"
+msgstr "Soltanto una di:\n"
+
+#: src/myoptSymtab.c:766
+msgid "At least one of:\n"
+msgstr "Almeno una di:\n"
+
+#: src/myoptSymtab.c:780
+msgid " (required)"
+msgstr "(obbligatoria)"
+
+#: src/myoptSymtab.c:782
+msgid " (optional)"
+msgstr "(opzionale)"
+
+#: src/myoptParser.c:203
+#, c-format
+msgid "Error: multiple occurrences(%d) of '%s' option.\n"
+msgstr "Errore: occorrenze multiple(%d) dell'opzione '%s'.\n"
+
+#: src/myoptParser.c:214
+#, c-format
+msgid "Error: option %s: wrong number of arguments: must be %d; found %d.\n"
+msgstr "Errore: opzione %s: numero di argomenti errato: deve essere %d; trovato %d.\n"
+
+#: src/myoptParser.c:227
+#, c-format
+msgid ""
+"Error: option %s: wrong number of arguments: must be between %d and %d; "
+"found %d.\n"
+msgstr "Errore: opzione %s: numero di argomenti errato: deve essere tra %d e %d; trovato %d.\n"
+
+#: src/myoptParser.c:236
+#, c-format
+msgid "Error: option '-%c --%s' is required.\n"
+msgstr "Errore: l'opzione '-%c --%s' è obbligatoria.\n"
+
+#: src/myoptParser.c:275
+#, c-format
+msgid "Error: must be present at least one option of group %d '%s'.\n"
+msgstr "Errore: deve essere presente almeno un'opzione del gruppo %d '%s'.\n"
+
+#: src/myoptParser.c:281
+#, c-format
+msgid ""
+"Error: there is more than one option for the mutually exclusive group %d "
+"'%s'. It is allowed only one.\n"
+msgstr "Errore: è stata specificata più di un'opzione per il gruppo %d '%s'. Ne è permessa soltanto una.\n"
+
+#: src/myoptParser.c:291
+#, c-format
+msgid "Error: wrong number of positional arguments: must be %d; found %d.\n"
+msgstr "Errore: numero errato di argomenti posizionali: deve essere %d; trovato %d.\n" 
+
+#: src/myoptParser.c:298
+#, c-format
+msgid ""
+"Error: wrong number of positional arguments: must be between %d and %d; "
+"found %d.\n"
+msgstr "Errore: numero errato di argomenti posizionali: deve essere tra %d e %d; trovato %d.\n"
+
+#: src/myoptParser.c:304
+#, c-format
+msgid ""
+"Error: wrong number of positional arguments: must be at least %d; found %d.\n"
+msgstr "Errore: numero errato di argomenti posizionali: deve essere almeno %d; trovato %d.\n"
+
+#: src/myoptParser.c:418
+#, c-format
+msgid ""
+"Error: option %s: wrong number of arguments: must be almost %d; found %d.\n"
+msgstr "Errore: opzione %s: numero errato di argomenti: deve essere almeno %d; trovato %d.\n"
+
+#: src/myoptParser.c:494
+msgid "Error: multiple occurrences of '--'.\n"
+msgstr "Errore: occorrenze multiple di '--'.\n"
+
+#: src/myoptParser.c:505
+msgid "Error: unexpected token.\n"
+msgstr "Errore: token inaspettato.\n"
+
+#: src/myoptParser.c:715
+#, c-format
+msgid "Error: positional argument %d wrong type. Must be %s; found %s: '%s'\n"
+msgstr "Errore: tipo dell'argomento posizionale %d errato. Deve essere %s; trovato %s: '%s'\n"
+
+#: src/myoptParser.c:717
+#, c-format
+msgid ""
+"Error: option '%s': argument %d wrong type. Must be %s; found %s: '%s'\n"
+msgstr "Errore: opzione '%s': specificato un tipo errato per l'argomento %d. Deve essere %s; trovato %s: '%s'\n"
+
+#: src/myoptLexer.c:86
+msgid "Error: wrong option '-'\n"
+msgstr "Errore: opzione non valida '-'\n"
+
+#: src/myoptLexer.c:150
+#, c-format
+msgid ""
+"Error: option '%s': there must be no spaces before and after the equal sign\n"
+msgstr "Errore: opzione '%s': Non ci devono essere spazi prima e dopo il segno di uguale\n"
+
+#: src/myoptLexer.c:172 src/myoptLexer.c:188
+#, c-format
+msgid "Error: unrecognized option '%s'\n"
+msgstr "Errore: opzione non riconosciuta '%s'\n"
+
+#: src/myoptLexer.c:251
+#, c-format
+msgid "Error: unrecognized option '-%c'\n"
+msgstr "Errore: opzione non riconosciuta '-%c'\n"
