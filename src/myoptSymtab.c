@@ -38,7 +38,7 @@ myopt_Parser_t myopt_InitParser()
 	
 	setlocale(LC_ALL, "");
 	
-	printf("\nInitParser : PACKAGE: %s LOCALEDIR: %s\n", PACKAGE, LOCALEDIR);
+	/* printf("\nInitParser : PACKAGE: %s LOCALEDIR: %s\n", PACKAGE, LOCALEDIR); */
  
 /* #ifdef ENABLE_NLS */
 	bindtextdomain(PACKAGE, LOCALEDIR);
