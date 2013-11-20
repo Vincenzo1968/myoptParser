@@ -57,7 +57,7 @@ msgstr "'%s': tipo non valido: '%s' in strTypes '%s'\n"
 
 #: src/myoptSymtab.c:655
 msgid "   Arguments for option '"
-msgstr "   Argomenti per l'opzione"
+msgstr "   Argomenti per l'opzione '"
 
 #: src/myoptSymtab.c:663
 msgid "zero or more"
