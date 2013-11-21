@@ -31,6 +31,10 @@
 
 #include "myoptSymtab.h"
 
+/*
+valgrind --leak-check=full --show-reachable=yes --track-origins=yes --log-file=outValgrind.txt ./sample1 --help
+*/
+
 void myopt_SetLang(myopt_Parser_t parser, int l)
 {
 	char strError[ARRAY_LANG_LEN_ROW + 1];	
@@ -246,7 +250,8 @@ myopt_Parser_t myopt_InitParser()
 		parser->arrayOptArgs[x].strTypes[0] = '\0';
 		parser->arrayOptArgs[x].arrayArgs = NULL;
 		parser->arrayOptArgs[x].countArgs = 0;
-		parser->arrayOptArgs[x].countOccurrences = 0;
+		parser->arrayOptArgs[x].countOccurrences = 0;		
+		parser->arrayOptArgs[x].listArgs = NULL;
 	}
 			
 	parser->arrayPosArgs = (myopt_Argument*)malloc(sizeof(myopt_Argument) * MAX_OPTS);
@@ -344,7 +349,10 @@ void myopt_FreeParser(myopt_Parser_t parser)
 	{
 		free(parser->arrayPosArgs);
 		parser->arrayPosArgs = NULL;
-	}	
+	}
+	
+	free(parser);
+	parser = NULL;	
 }
 
 int32_t myopt_AddGroup(myopt_Parser_t parser, const char *strDescription, bool bMutuallyExclusive, bool bRequired)

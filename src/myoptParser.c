@@ -161,9 +161,10 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 				
 	md.m_Parser = parser;
 	
-	len = strlen(strInput);
+	len = strnlen(strInput, MAX_LEN_STR);
 	
-	strncpy(parser->strInput, strInput, len + 1);	
+	strncpy(parser->strInput, strInput, len);
+	
 	myopt_MakeUsageString(md.m_Parser);
 	
 	myopt_InitToken(&(md.m_Token));

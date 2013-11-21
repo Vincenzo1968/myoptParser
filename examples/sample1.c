@@ -3,9 +3,7 @@
 
    Author: Vincenzo Lo Cicero.
    e-mail: vincenzo.locicero@libero.it
-    
-   From an idea by Leonardo Pozzati <e-mail: leon.pozzati@gmail.com>.
-   
+       
    Special thanks to Francesco Baro <e-mail: francesco.baro@libero.it >
    for code review and bug fixing.
    
@@ -114,7 +112,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}		
 	
-	//idOption = myopt_LookupShort(parser, 'h');
+	/* idOption = myopt_LookupShort(parser, 'h'); */
 	idOption = myopt_LookupLong(parser, "help");
 	if ( idOption >= 0 && parser->arrayOptArgs[idOption].countOccurrences > 0 )
 	{
