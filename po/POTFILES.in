@@ -1,8 +1,0 @@
-# List of source files which contain translatable strings.
-src/myoptSymtab.h
-src/myoptSymtab.c
-src/gettext.h
-src/myoptParser.c
-src/myoptLexer.c
-src/myoptParser.h
-src/myoptLexer.h

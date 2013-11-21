@@ -74,7 +74,7 @@ If you want to compile and install the library in both the 32 and 64-bit, you ca
 
       $ mkdir build32
       $ cd build32
-      $ ../configure CPPFLAGS="-m32" LDFLAGS="-m32" --libdir=/usr/local/lib
+      $ ../configure CFLAGS="-m32" CXXFLAGS="-m32" LDFLAGS="-m32" --libdir=/usr/local/lib
       $ make
       $ sudo make install
 
@@ -82,7 +82,7 @@ If you want to compile and install the library in both the 32 and 64-bit, you ca
 
       $ mkdir build64
       $ cd build64
-      $ ../configure CPPFLAGS="-m64" LDFLAGS="-m64" --libdir=/usr/local/lib64
+      $ ../configure CFLAGS="-m64" CXXFLAGS="-m64" LDFLAGS="-m64" --libdir=/usr/local/lib64
       $ make
       $ sudo make install
       

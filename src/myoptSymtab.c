@@ -31,23 +31,137 @@
 
 #include "myoptSymtab.h"
 
+void myopt_SetLang(myopt_Parser_t parser, int l)
+{
+	char strError[ARRAY_LANG_LEN_ROW + 1];	
+	
+	if ( !parser )
+	{
+		if ( l == LANG_ITALIAN )
+			sprintf(strError, "Chiamata non valida alla funzione myopt_SetLang: l'argomento 'parser' è NULL\n");
+		else
+			sprintf(strError, "Invalid call myopt_SetLang: argument 'parser' is NULL\n");
+		strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE + 1);
+		parser->countInternalErrors++;		
+		return;
+	}			
+	
+	if ( l == LANG_ITALIAN )
+	{
+		strncpy(parser->aLang[LANG_001], "Errore: memoria insufficiente\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_002], "Chiamata non valida alla funzione myopt_AddGroup(%s): l'argumento 'parser' è NULL\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_003], "Errore: deve essere specificata almeno una tra shortName e longName\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_004], "Invalid call myopt_AddOption(%s): argument 'parser' is NULL\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_005], "Invalid call myopt_AddOption(%s): idGroup %d not valid.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_006], "Gruppo %d", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_007], "Chiamata non valida alla funzione myopt_AddOption(%s): deve essere specificato almeno uno tra shortName and longName\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_008], "Chiamata non valida alla funzione myopt_AddOption(%s): l'opzione è già presente nella tabella dei simboli\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_009], "Chiamata non valida alla funzione myopt_AddOption(%s): l'opzione è già presente nella tabella dei simboli\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_010], "'%s': tipo non valido: '%s' in strTypes '%s'\n", ARRAY_LANG_LEN_ROW + 1);		
+		strncpy(parser->aLang[LANG_011], "   Argomenti per l'opzione '", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_012], "zero or più", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_013], "uno o più", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_014], "%d o più", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_015], "tra %d e %d", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_016], "esattamente %d", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_017], "Uso:\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_018], " Opzioni", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_019], "(zero o più)", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_020], "(uno o più)", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_021], "(%d o più)", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_022], "(tra %d e %d)", ARRAY_LANG_LEN_ROW +1);
+		strncpy(parser->aLang[LANG_023], "(esattamente %d)", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_024], "\nOpzioni:\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_025], "Gruppo[%d]: %s:\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_026], "Soltanto una di:\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_027], "Almeno una di:\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_028], " (obbligatoria)", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_029], " (opzionale)", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_030], "Errore: occorrenze multiple(%d) dell'opzione '%s'.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_031], "Errore: opzione %s: numero errato di argomenti: deve essere %d; trovato %d.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_032], "Errore: opzione %s: numero errato di argomenti: devono essere tra %d e %d; trovato %d.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_033], "Errore: l'opzione '-%c --%s' è obbligatoria.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_034], "Errore: deve essere presente almeno un'opzione del gruppo %d '%s'.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_035], "Errore: specificata più di un'opzione per il gruppo %d '%s'. Ne è permessa soltanto una.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_036], "Errore: numero errato di argomenti posizionali: deve essere %d; trovato %d.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_037], "Errore: numero errato di argomenti posizionali: devono essere tra %d e %d; trovate %d.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_038], "Errore: numero errato di argomenti posizionali: devono essere almeno %d; trovate %d.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_039], "Errore: opzione %s: numero errato di argomenti: devono essere al più %d; trovate %d.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_040], "Errore: occorrenze multiple di '--'.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_041], "Errore: token inaspettato.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_042], "Errore: tipo errato per l'argomento posizionale %d. deve essere %s; trovato %s: '%s'\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_043], "Errore: tipo errato per l'argomento posizionale %d. deve essere %s; trovato %s: '%s'\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_044], "Errore: opzione '%s': tipo errato per l'argomento %d. deve essere %s; trovato %s: '%s'\n", ARRAY_LANG_LEN_ROW +  1);
+		strncpy(parser->aLang[LANG_045], "Errore: token troppo lungo: '%s'.\nLa lunghezza massima ammessa è %d.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_046], "Errore: option errata '-'\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_047], "Errore: opzione '%s': non ci devono essere spazi prima e dopo il segno di uguale\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_048], "Errore: opzione non riconosciuta '%s'\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_049], "Errore: opzione non riconosciuta '-%c'\n", ARRAY_LANG_LEN_ROW + 1);		
+	}
+	else
+	{
+		strncpy(parser->aLang[LANG_001], "Error: insufficient memory\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_002], "Invalid call myopt_AddGroup(%s): argument 'parser' is NULL\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_003], "Error: must be specified at least one of shortName and longName\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_004], "Invalid call myopt_AddOption(%s): argument 'parser' is NULL\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_005], "Invalid call myopt_AddOption(%s): idGroup %d not valid.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_006], "Group %d", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_007], "Invalid call myopt_AddOption(%s): must be specified one of shortName and longName\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_008], "Invalid call myopt_AddOption(%s): the option is already present in the symbol table\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_009], "Invalid call myopt_AddOption(%s): the option is already present in the symbol table\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_010], "'%s': wrong type spec: '%s' in strTypes '%s'\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_011], "   Arguments for option '", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_012], "zero or more", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_013], "one or more", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_014], "%d or more", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_015], "between %d and %d", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_016], "exactly %d", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_017], "Usage:\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_018], " Options", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_019], "(zero or more)", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_020], "(one or more)", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_021], "(%d or more)", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_022], "(between %d and %d)", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_023], "(exactly %d)", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_024], "\nOptions:\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_025], "Group[%d]: %s:\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_026], "Only one of:\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_027], "At least one of:\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_028], " (required)", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_029], " (optional)", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_030], "Error: multiple occurrences(%d) of '%s' option.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_031], "Error: option %s: wrong number of arguments: must be %d; found %d.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_032], "Error: option %s: wrong number of arguments: must be between %d and %d; found %d.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_033], "Error: option '-%c --%s' is required.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_034], "Error: must be present at least one option of group %d '%s'.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_035], "Error: there is more than one option for the mutually exclusive group %d '%s'. It is allowed only one.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_036], "Error: wrong number of positional arguments: must be %d; found %d.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_037], "Error: wrong number of positional arguments: must be between %d and %d; found %d.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_038], "Error: wrong number of positional arguments: must be at least %d; found %d.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_039], "Error: option %s: wrong number of arguments: must be almost %d; found %d.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_040], "Error: multiple occurrences of '--'.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_041], "Error: unexpected token.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_042], "Error: positional argument %d wrong type. Must be %s; found %s: '%s'\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_043], "Error: positional argument %d wrong type. Must be %s; found %s: '%s'\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_044], "Error: option '%s': argument %d wrong type. Must be %s; found %s: '%s'\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_045], "Error: token too long: '%s'.\nMax length is %d.\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_046], "Error: wrong option '-'\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_047], "Error: option '%s': there must be no spaces before and after the equal sign\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_048], "Error: unrecognized option '%s'\n", ARRAY_LANG_LEN_ROW + 1);
+		strncpy(parser->aLang[LANG_049], "Error: unrecognized option '-%c'\n", ARRAY_LANG_LEN_ROW + 1);
+	}
+}
+
 myopt_Parser_t myopt_InitParser()
 {
 	int x;
 	myopt_Parser_t parser = NULL;
 	
-	setlocale(LC_ALL, "");
-	
-	/* printf("\nInitParser : PACKAGE: %s LOCALEDIR: %s\n", PACKAGE, LOCALEDIR); */
- 
-/* #ifdef ENABLE_NLS */
-	bindtextdomain(PACKAGE, LOCALEDIR);
-	textdomain(PACKAGE);
-/* #endif */
-	
 	parser = (myopt_Parser_t)malloc(sizeof(struct _myopt_Parser_t));
 	if ( !parser )
 		return NULL;
+		
+	myopt_SetLang(parser, LANG_ENGLISH);
 		
 	parser->strInput = NULL;
 	
@@ -161,7 +275,7 @@ myopt_Parser_t myopt_InitParser()
 		parser->arrayPosArgs[x].floatValue = 0;
 	}
 	
-	strncpy(parser->strPosArgsName, "POS_ARG", MAX_LEN_STR);
+	strncpy(parser->strPosArgsName, "POS_ARG", MAX_LEN_STR + 1);
 	parser->nPosArgsMin = 0;	
 	parser->nPosArgsMax = OR_MORE;
 	parser->strPosTypes[0] = '\0';
@@ -237,12 +351,12 @@ int32_t myopt_AddGroup(myopt_Parser_t parser, const char *strDescription, bool b
 {
 	int32_t ret;
 	int32_t x;
-	char strError[1024];	
+	char strError[ARRAY_LANG_LEN_ROW + 1];	
 			
 	if ( !parser )
 	{
-		sprintf(strError, gettext("Invalid call myopt_AddGroup(%s): argument 'parser' is NULL\n"), strDescription);
-		strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE);
+		sprintf(strError, parser->aLang[LANG_002], strDescription);
+		strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE + 1);
 		parser->countInternalErrors++;
 		return -1;
 	}		
@@ -254,7 +368,7 @@ int32_t myopt_AddGroup(myopt_Parser_t parser, const char *strDescription, bool b
 		parser->arrayGroups = (myopt_Group*)realloc(parser->arrayGroups, (sizeof(myopt_Group) * parser->countGroups) + MAX_OPTS);
 		if ( !(parser->arrayGroups) )
 		{
-			strncat(parser->strInternalErrors, gettext(ERRMSG_INSUFFICIENT_MEMORY), STR_ERRORS_SIZE);
+			strncat(parser->strInternalErrors, parser->aLang[LANG_001], STR_ERRORS_SIZE + 1);
 			parser->countInternalErrors++;
 			return -1;				
 		}
@@ -267,9 +381,9 @@ int32_t myopt_AddGroup(myopt_Parser_t parser, const char *strDescription, bool b
 	}
 	
 	if ( strDescription == NULL || strlen(strDescription) == 0 )
-		sprintf(parser->arrayGroups[parser->countGroups].strDescription, gettext(MSG_GROUP), parser->countGroups);
+		sprintf(parser->arrayGroups[parser->countGroups].strDescription, parser->aLang[LANG_006], parser->countGroups);
 	else
-		strncpy(parser->arrayGroups[parser->countGroups].strDescription, strDescription, MAX_LEN_STR);
+		strncpy(parser->arrayGroups[parser->countGroups].strDescription, strDescription, MAX_LEN_STR + 1);
 
 	parser->arrayGroups[parser->countGroups].bMutuallyExclusive = bMutuallyExclusive;	
 	parser->arrayGroups[parser->countGroups].bRequired = bRequired;
@@ -290,8 +404,8 @@ bool myopt_AddOption(myopt_Parser_t parser,
                      int32_t nArgsMax,                     
                      const char *strTypes)
 {
-	char str[MAX_LEN_STR];
-	char strError[1024];
+	char str[MAX_LEN_STR + 1];
+	char strError[ARRAY_LANG_LEN_ROW + 1];
 	char strOptionName[1024];
 	
 	int32_t x;
@@ -301,22 +415,22 @@ bool myopt_AddOption(myopt_Parser_t parser,
 	
 	if ( !myopt_MakeOptionName(shortName, longName, strOptionName) )
 	{
-		strncat(parser->strInternalErrors, gettext("Error: must be specified at least one of shortName and longName\n"), STR_ERRORS_SIZE);
+		strncat(parser->strInternalErrors, parser->aLang[LANG_003], STR_ERRORS_SIZE + 1);
 		parser->countInternalErrors++;
 		return false;
 	}
 		
 	if ( !parser )
 	{
-		sprintf(strError, gettext("Invalid call myopt_AddOption(%s): argument 'parser' is NULL\n"), strOptionName);
-		strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE);
+		sprintf(strError, parser->aLang[LANG_004], strOptionName);
+		strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE + 1);
 		return false;
 	}
 		
 	if ( idGroup < 0 || idGroup >= parser->countGroups )
 	{
-		sprintf(strError, gettext("Invalid call myopt_AddOption(%s): idGroup %d not valid.\n"), strOptionName, idGroup);
-		strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE);
+		sprintf(strError, parser->aLang[LANG_005], strOptionName, idGroup);
+		strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE + 1);
 		parser->countInternalErrors++;
 		return false;
 	}
@@ -326,7 +440,7 @@ bool myopt_AddOption(myopt_Parser_t parser,
 		parser->arrayOptArgs = (myopt_Option*)realloc(parser->arrayOptArgs, (sizeof(myopt_Option) * parser->countOptArgs) + MAX_OPTS);
 		if ( !(parser->arrayOptArgs) )
 		{
-			strncat(parser->strInternalErrors, gettext(ERRMSG_INSUFFICIENT_MEMORY), STR_ERRORS_SIZE);
+			strncat(parser->strInternalErrors, parser->aLang[LANG_001], STR_ERRORS_SIZE + 1);
 			parser->countInternalErrors++;
 			return false;				
 		}
@@ -346,8 +460,8 @@ bool myopt_AddOption(myopt_Parser_t parser,
 	
 	if ( shortName == 0 && longName == NULL )
 	{
-		sprintf(strError, gettext("Invalid call myopt_AddOption(%s): must be specified one of shortName and longName\n"), strOptionName);
-		strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE);
+		sprintf(strError, parser->aLang[LANG_007], strOptionName);
+		strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE + 1);
 		parser->countInternalErrors++;		
 		return false;		
 	}
@@ -356,8 +470,8 @@ bool myopt_AddOption(myopt_Parser_t parser,
 	{
 		if ( myopt_LookupShort(parser, shortName) >= 0 )
 		{
-			sprintf(strError, gettext("Invalid call myopt_AddOption(%s): the option is already present in the symbol table\n"), strOptionName);
-			strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE);
+			sprintf(strError, parser->aLang[LANG_008], strOptionName);
+			strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE + 1);
 			parser->countInternalErrors++;		
 			return false;
 		}
@@ -380,21 +494,21 @@ bool myopt_AddOption(myopt_Parser_t parser,
 		/* if ( myopt_LookupLong(parser, longName) >= 0 ) */
 		if ( myopt_FindLong(parser, longName) >= 0 )
 		{
-			sprintf(strError, gettext("Invalid call myopt_AddOption(%s): the option is already present in the symbol table\n"), strOptionName);
-			strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE);
+			sprintf(strError, parser->aLang[LANG_009], strOptionName);
+			strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE + 1);
 			parser->countInternalErrors++;					
 			return false;
 		}
 		else
 		{
-			strncpy(parser->arrayOptArgs[parser->countOptArgs].longName, longName, MAX_LEN_STR);
+			strncpy(parser->arrayOptArgs[parser->countOptArgs].longName, longName, MAX_LEN_STR + 1);
 		}
 	}
 		
 	if ( strDescription == NULL )
 		parser->arrayOptArgs[parser->countOptArgs].strDescription[0] = '\0';
 	else
-		strncpy(parser->arrayOptArgs[parser->countOptArgs].strDescription, strDescription, MAX_LEN_STR);
+		strncpy(parser->arrayOptArgs[parser->countOptArgs].strDescription, strDescription, MAX_LEN_STR + 1);
 	
 	if ( parser->arrayGroups[idGroup].bMutuallyExclusive )
 		parser->arrayOptArgs[parser->countOptArgs].bRequired = false;
@@ -421,9 +535,9 @@ bool myopt_AddOption(myopt_Parser_t parser,
 		parser->arrayOptArgs[parser->countOptArgs].strTypes[0] = '\0';
 	else
 	{
-		strncpy(str, strTypes, MAX_LEN_STR);
+		strncpy(str, strTypes, MAX_LEN_STR + 1);
 		myopt_NormalizeStringTypes(str);
-		strncpy(parser->arrayOptArgs[parser->countOptArgs].strTypes, str, MAX_LEN_STR);
+		strncpy(parser->arrayOptArgs[parser->countOptArgs].strTypes, str, MAX_LEN_STR + 1);
 	}
 	
 	if ( !myopt_CheckTypesString(parser, strOptionName, parser->arrayOptArgs[parser->countOptArgs].strTypes) )
@@ -508,12 +622,12 @@ int myopt_FindLong(myopt_Parser_t parser, const char *longName)
 
 bool myopt_SetPositionalArgsParams(myopt_Parser_t parser, const char *strName, int32_t nArgsMin, int32_t nArgsMax, const char *strTypes)
 {
-	char str[MAX_LEN_STR];
+	char str[MAX_LEN_STR + 1];
 	
 	if ( strName == NULL || strlen(strName) == 0 )
-		strncpy(parser->strPosArgsName, "POS_ARG", MAX_LEN_STR);
+		strncpy(parser->strPosArgsName, "POS_ARG", MAX_LEN_STR + 1);
 	else
-		strncpy(parser->strPosArgsName, strName, MAX_LEN_STR);
+		strncpy(parser->strPosArgsName, strName, MAX_LEN_STR + 1);
 		
 	if ( nArgsMin < 0 )
 		nArgsMin = 0;
@@ -528,9 +642,9 @@ bool myopt_SetPositionalArgsParams(myopt_Parser_t parser, const char *strName, i
 		parser->strPosTypes[0] = '\0';
 	else
 	{
-		strncpy(str, strTypes, MAX_LEN_STR);
+		strncpy(str, strTypes, MAX_LEN_STR + 1);
 		myopt_NormalizeStringTypes(str);
-		strncpy(parser->strPosTypes, str, MAX_LEN_STR);
+		strncpy(parser->strPosTypes, str, MAX_LEN_STR + 1);
 	}
 	
 	if ( !myopt_CheckTypesString(parser, parser->strPosArgsName, parser->strPosTypes) )
@@ -544,7 +658,7 @@ void myopt_NormalizeStringTypes(char *strTypes)
 	int len = strlen(strTypes);
 	int x = 0;
 	int i = 0;
-	char strOut[MAX_LEN_STR];
+	char strOut[MAX_LEN_STR + 1];
 	
 	if ( strTypes == NULL )
 		return;
@@ -563,15 +677,15 @@ void myopt_NormalizeStringTypes(char *strTypes)
 	}
 	strOut[i] = '\0';
 	
-	strncpy(strTypes, strOut, MAX_LEN_STR);
+	strncpy(strTypes, strOut, MAX_LEN_STR + 1);
 }
 
 bool myopt_CheckTypesString(myopt_Parser_t parser, const char *strOptionName, const char *strTypes)
 {
-	char str[MAX_LEN_STR];
+	char str[MAX_LEN_STR + 1];
 	int x;
 	int i;
-	char strError[1024];
+	char strError[ARRAY_LANG_LEN_ROW + 1];
 	int len;
 	bool ret = true;
 		
@@ -606,8 +720,8 @@ ciclo:
 			ret = true;
 		else
 		{
-			sprintf(strError, gettext("'%s': wrong type spec: '%s' in strTypes '%s'\n"), strOptionName, str, strTypes);
-			strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE);
+			sprintf(strError, parser->aLang[LANG_010], strOptionName, str, strTypes);
+			strncat(parser->strInternalErrors, strError, STR_ERRORS_SIZE + 1);
 			parser->countInternalErrors++;
 			return false;
 		}		
@@ -638,10 +752,10 @@ bool myopt_MakeOptionName(char shortName, const char *longName, char *strOptionN
 	if ( longName != NULL && strlen(longName) > 0 )
 	{
 		if ( bShort )
-			strncat(strOptionName, ", --", STR_ERRORS_SIZE);
+			strncat(strOptionName, ", --", STR_ERRORS_SIZE + 1);
 		else
-			strncat(strOptionName, "--", STR_ERRORS_SIZE);
-		strncat(strOptionName, longName, MAX_LEN_STR);
+			strncat(strOptionName, "--", STR_ERRORS_SIZE + 1);
+		strncat(strOptionName, longName, MAX_LEN_STR + 1);
 	}	
 	
 	return true;
@@ -654,38 +768,38 @@ uint32_t myopt_MakeArgumentOptionHelp(myopt_Parser_t parser, uint32_t index, con
 	
 	if ( !(parser->arrayOptArgs[index].nArgsMin == 0 && parser->arrayOptArgs[index].nArgsMax == 0) )
 	{
-		strncat(strHelp, gettext("   Arguments for option '"), STR_ERRORS_SIZE);
-		strncat(strHelp, strOptionName, STR_ERRORS_SIZE);
-		strncat(strHelp, "': ", STR_ERRORS_SIZE);
+		strncat(strHelp, parser->aLang[LANG_011], STR_ERRORS_SIZE + 1);
+		strncat(strHelp, strOptionName, STR_ERRORS_SIZE + 1);
+		strncat(strHelp, "': ", STR_ERRORS_SIZE + 1);
 		
 		if ( parser->arrayOptArgs[index].nArgsMax == OR_MORE )
 		{
 			if ( parser->arrayOptArgs[index].nArgsMin == 0 )
 			{
-				strncat(strHelp, gettext("zero or more"), STR_ERRORS_SIZE);
+				strncat(strHelp, parser->aLang[LANG_012], STR_ERRORS_SIZE + 1);
 			}
 			else if ( parser->arrayOptArgs[index].nArgsMin == 1 )
 			{
-				strncat(strHelp, gettext("one or more"), STR_ERRORS_SIZE);
+				strncat(strHelp, parser->aLang[LANG_013], STR_ERRORS_SIZE + 1);
 			}
 			else
 			{
-				sprintf(strTemp, gettext("%d or more"), parser->arrayOptArgs[index].nArgsMin);
-				strncat(strHelp, strTemp, STR_ERRORS_SIZE);
+				sprintf(strTemp, parser->aLang[LANG_014], parser->arrayOptArgs[index].nArgsMin);
+				strncat(strHelp, strTemp, STR_ERRORS_SIZE + 1);
 			}		
 		}
 		else
 		{
 			if ( parser->arrayOptArgs[index].nArgsMin != parser->arrayOptArgs[index].nArgsMax )			
-				sprintf(strTemp, gettext("between %d and %d"), parser->arrayOptArgs[index].nArgsMin, parser->arrayOptArgs[index].nArgsMax);
+				sprintf(strTemp, parser->aLang[LANG_015], parser->arrayOptArgs[index].nArgsMin, parser->arrayOptArgs[index].nArgsMax);
 			else
-				sprintf(strTemp, gettext("exactly %d"), parser->arrayOptArgs[index].nArgsMin);
-			strncat(strHelp, strTemp, STR_ERRORS_SIZE);
+				sprintf(strTemp, parser->aLang[LANG_016], parser->arrayOptArgs[index].nArgsMin);
+			strncat(strHelp, strTemp, STR_ERRORS_SIZE + 1);
 		}
 		
-		strncat(strHelp, "(", STR_ERRORS_SIZE);
-		strncat(strHelp, parser->arrayOptArgs[index].strTypes, STR_ERRORS_SIZE);
-		strncat(strHelp, ")", STR_ERRORS_SIZE);
+		strncat(strHelp, "(", STR_ERRORS_SIZE + 1);
+		strncat(strHelp, parser->arrayOptArgs[index].strTypes, STR_ERRORS_SIZE + 1);
+		strncat(strHelp, ")", STR_ERRORS_SIZE + 1);
 	}
 	
 	return strlen(strHelp);
@@ -701,51 +815,51 @@ void myopt_MakeUsageString(myopt_Parser_t parser)
 	if ( !parser )
 		return;
 		
-	strncat(parser->strUsage, gettext("Usage:\n"), STR_ERRORS_SIZE);
-	strncat(parser->strUsage, parser->strExeName, STR_ERRORS_SIZE);
+	strncat(parser->strUsage, parser->aLang[LANG_017], STR_ERRORS_SIZE + 1);
+	strncat(parser->strUsage, parser->strExeName, STR_ERRORS_SIZE + 1);
 	
 	if ( parser->countOptArgs > 0 )
-		strncat(parser->strUsage, gettext(" Options"), STR_ERRORS_SIZE);
+		strncat(parser->strUsage, parser->aLang[LANG_018], STR_ERRORS_SIZE + 1);
 	
 	if ( !(parser->nPosArgsMin == 0 && parser->nPosArgsMax == 0) )
 	{
-		strncat(parser->strUsage, " ", STR_ERRORS_SIZE);
-		strncat(parser->strUsage, parser->strPosArgsName, STR_ERRORS_SIZE);
+		strncat(parser->strUsage, " ", STR_ERRORS_SIZE + 1);
+		strncat(parser->strUsage, parser->strPosArgsName, STR_ERRORS_SIZE + 1);
 		
 		if ( parser->nPosArgsMax == OR_MORE )
 		{
 			if ( parser->nPosArgsMin == 0 )
 			{
-				strncat(parser->strUsage, gettext("(zero or more)"), STR_ERRORS_SIZE);
+				strncat(parser->strUsage, parser->aLang[LANG_019], STR_ERRORS_SIZE + 1);
 			}
 			else if ( parser->nPosArgsMin == 1 )
 			{
-				strncat(parser->strUsage, gettext("(one or more)"), STR_ERRORS_SIZE);
+				strncat(parser->strUsage, parser->aLang[LANG_020], STR_ERRORS_SIZE + 1);
 			}
 			else
 			{
-				sprintf(strTemp, gettext("(%d or more)"), parser->nPosArgsMin);
-				strncat(parser->strUsage, strTemp, STR_ERRORS_SIZE);
+				sprintf(strTemp, parser->aLang[LANG_021], parser->nPosArgsMin);
+				strncat(parser->strUsage, strTemp, STR_ERRORS_SIZE + 1);
 			}		
 		}
 		else
 		{
 			if ( parser->nPosArgsMin != parser->nPosArgsMax )
-				sprintf(strTemp, gettext("(between %d and %d)"), parser->nPosArgsMin, parser->nPosArgsMax);
+				sprintf(strTemp, parser->aLang[LANG_022], parser->nPosArgsMin, parser->nPosArgsMax);
 			else
-				sprintf(strTemp, gettext("(exactly %d)"), parser->nPosArgsMin);
+				sprintf(strTemp, parser->aLang[LANG_023], parser->nPosArgsMin);
 			
-			strncat(parser->strUsage, strTemp, STR_ERRORS_SIZE);			
+			strncat(parser->strUsage, strTemp, STR_ERRORS_SIZE + 1);			
 		}
 		
-		strncat(parser->strUsage, "(", STR_ERRORS_SIZE);
-		strncat(parser->strUsage, parser->strPosTypes, STR_ERRORS_SIZE);
-		strncat(parser->strUsage, ")", STR_ERRORS_SIZE);
-		strncat(parser->strUsage, "\n", STR_ERRORS_SIZE);
+		strncat(parser->strUsage, "(", STR_ERRORS_SIZE + 1);
+		strncat(parser->strUsage, parser->strPosTypes, STR_ERRORS_SIZE + 1);
+		strncat(parser->strUsage, ")", STR_ERRORS_SIZE + 1);
+		strncat(parser->strUsage, "\n", STR_ERRORS_SIZE + 1);
 	}
 
 	if ( parser->countOptArgs > 0 )
-		strncat(parser->strUsage, gettext("\nOptions:\n"), STR_ERRORS_SIZE);
+		strncat(parser->strUsage, parser->aLang[LANG_024], STR_ERRORS_SIZE + 1);
 	
 	for ( x = 0; x < parser->countGroups; x++ )
 	{
@@ -753,19 +867,19 @@ void myopt_MakeUsageString(myopt_Parser_t parser)
 		
 		if ( parser->countGroups > 1 )
 		{
-			sprintf(strTemp, gettext("Group[%d]: %s:\n"), x, parser->arrayGroups[x].strDescription);
-			strncat(parser->strUsage, strTemp, STR_ERRORS_SIZE);
+			sprintf(strTemp, parser->aLang[LANG_025], x, parser->arrayGroups[x].strDescription);
+			strncat(parser->strUsage, strTemp, STR_ERRORS_SIZE + 1);
 		}
 			
 		if ( parser->arrayGroups[x].bMutuallyExclusive && parser->arrayGroups[x].bRequired )
 		{
 			bGroupFree = 0;
-			strncat(parser->strUsage, gettext("Only one of:\n"), STR_ERRORS_SIZE);
+			strncat(parser->strUsage, parser->aLang[LANG_026], STR_ERRORS_SIZE + 1);
 		}
 		
 		if ( parser->arrayGroups[x].bRequired && !parser->arrayGroups[x].bMutuallyExclusive )
 		{
-			strncat(parser->strUsage, gettext("At least one of:\n"), STR_ERRORS_SIZE);
+			strncat(parser->strUsage, parser->aLang[LANG_027], STR_ERRORS_SIZE + 1);
 		}
 			
 		for ( y = 0; y < parser->countOptArgs; y++ )
@@ -773,28 +887,28 @@ void myopt_MakeUsageString(myopt_Parser_t parser)
 			if ( parser->arrayOptArgs[y].idGroup == x )
 			{
 				myopt_MakeOptionName(parser->arrayOptArgs[y].shortName, parser->arrayOptArgs[y].longName, strOptionName);
-				strncat(parser->strUsage, "'", STR_ERRORS_SIZE);
-				strncat(parser->strUsage, strOptionName, STR_ERRORS_SIZE);
-				strncat(parser->strUsage, "'", STR_ERRORS_SIZE);				
+				strncat(parser->strUsage, "'", STR_ERRORS_SIZE + 1);
+				strncat(parser->strUsage, strOptionName, STR_ERRORS_SIZE + 1);
+				strncat(parser->strUsage, "'", STR_ERRORS_SIZE + 1);				
 				if ( bGroupFree )
 				{
 					if ( parser->arrayOptArgs[y].bRequired )
-						strncat(parser->strUsage, gettext(" (required)"), STR_ERRORS_SIZE);
+						strncat(parser->strUsage, parser->aLang[LANG_028], STR_ERRORS_SIZE + 1);
 					else
-						strncat(parser->strUsage, gettext(" (optional)"), STR_ERRORS_SIZE);
+						strncat(parser->strUsage, parser->aLang[LANG_029], STR_ERRORS_SIZE + 1);
 				}
-				strncat(parser->strUsage, "\t", STR_ERRORS_SIZE);
-				strncat(parser->strUsage, parser->arrayOptArgs[y].strDescription, STR_ERRORS_SIZE);
-				strncat(parser->strUsage, "\n", STR_ERRORS_SIZE);
+				strncat(parser->strUsage, "\t", STR_ERRORS_SIZE + 1);
+				strncat(parser->strUsage, parser->arrayOptArgs[y].strDescription, STR_ERRORS_SIZE + 1);
+				strncat(parser->strUsage, "\n", STR_ERRORS_SIZE + 1);
 				
 				if ( myopt_MakeArgumentOptionHelp(parser, y, strOptionName, strTemp) > 0 )
 				{
-					strncat(parser->strUsage, strTemp, STR_ERRORS_SIZE);
-					strncat(parser->strUsage, "\n", STR_ERRORS_SIZE);
+					strncat(parser->strUsage, strTemp, STR_ERRORS_SIZE + 1);
+					strncat(parser->strUsage, "\n", STR_ERRORS_SIZE + 1);
 				}
 			}
 		}
-		strncat(parser->strUsage, "\n", STR_ERRORS_SIZE);
+		strncat(parser->strUsage, "\n", STR_ERRORS_SIZE + 1);
 	}	
 }
 
@@ -813,7 +927,7 @@ myopt_ArgsList* myopt_ArgsListNewNode(myopt_ArgsList *Elem)
 	if ( Elem->arg.strValue == NULL )
 		n->arg.strValue[0] = '\0';
 	else
-		strncpy(n->arg.strValue, Elem->arg.strValue, MAX_LEN_STR);
+		strncpy(n->arg.strValue, Elem->arg.strValue, MAX_LEN_STR + 1);
 	n->arg.intValue = Elem->arg.intValue;
 	n->arg.floatValue = Elem->arg.floatValue;
 	n->next = NULL;

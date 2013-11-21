@@ -55,6 +55,9 @@ int main(int argc, char* argv[])
 	parser = myopt_InitParser();
 	if ( !parser )
 		return -1;
+		
+	/* myopt_SetLang(parser, LANG_ENGLISH); */
+	/* myopt_SetLang(parser, LANG_ITALIAN); */		
 
 	idGroup = myopt_AddGroup(parser, "Gruppo 0", true, true);
 	

@@ -45,9 +45,10 @@
 #define STR_ERRORS_SIZE 8192
 #define OR_MORE -1
 
-#define ERRMSG_INSUFFICIENT_MEMORY "Error: insufficient memory\n"
-#define MSG_GROUP "Group %d"
-#define MSG_TOKEN_TOO_LONG "Error: token too long: '%s'.\nMax length is %d.\n"
+#define ARRAY_LANG_ROWS 256
+#define ARRAY_LANG_LEN_ROW 256
+#define LANG_ENGLISH 1
+#define LANG_ITALIAN 2
 
 
 #include <stdio.h>
@@ -57,9 +58,6 @@
 #include <math.h>
 #include <malloc.h>
 #include <stdint.h>
-#include <libintl.h>
-#include <locale.h>
-
 
 #ifdef HAVE_STDBOOL_H
 # include <stdbool.h>
@@ -78,6 +76,59 @@
 #endif
 
 BEGIN_C_DECLS
+
+typedef enum _myopt_LangEnum
+{
+	LANG_001,
+	LANG_002,
+	LANG_003,
+	LANG_004,
+	LANG_005,
+	LANG_006,
+	LANG_007,
+	LANG_008,
+	LANG_009,
+	LANG_010,
+	LANG_011,
+	LANG_012,
+	LANG_013,
+	LANG_014,
+	LANG_015,
+	LANG_016,
+	LANG_017,
+	LANG_018,
+	LANG_019,
+	LANG_020,
+	LANG_021,
+	LANG_022,
+	LANG_023,
+	LANG_024,
+	LANG_025,
+	LANG_026,
+	LANG_027,
+	LANG_028,
+	LANG_029,
+	LANG_030,
+	LANG_031,
+	LANG_032,
+	LANG_033,
+	LANG_034,
+	LANG_035,
+	LANG_036,
+	LANG_037,
+	LANG_038,
+	LANG_039,
+	LANG_040,
+	LANG_041,
+	LANG_042,
+	LANG_043,
+	LANG_044,
+	LANG_045,
+	LANG_046,
+	LANG_047,
+	LANG_048,
+	LANG_049
+} myopt_LangEnum;
 
 typedef enum _myopt_TokenTypeEnum
 {	
@@ -170,6 +221,7 @@ typedef struct _myopt_Parser_t
 	int32_t nPosArgsMin;
 	int32_t nPosArgsMax; /* OR_MORE */
 	char strPosTypes[MAX_LEN_STR + 1];
+	char aLang[ARRAY_LANG_ROWS][ARRAY_LANG_LEN_ROW + 1];
 } *myopt_Parser_t;
 
 typedef struct _myopt_ParserData
@@ -200,6 +252,7 @@ int myopt_LookupLong(myopt_Parser_t parser, const char *longName);
 int myopt_FindLong(myopt_Parser_t parser, const char *longName);
 bool myopt_MakeOptionName(char shortName, const char *longName, char *strOptionName);
 bool myopt_SetPositionalArgsParams(myopt_Parser_t parser, const char *strName, int32_t nArgsMin, int32_t nArgsMax, const char *strTypes);
+void myopt_SetLang(myopt_Parser_t parser, int l);
 
 /* ------- Functions defined in myoptParser.c ---------------- */
 
