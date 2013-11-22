@@ -3,9 +3,7 @@
 
    Author: Vincenzo Lo Cicero.
    e-mail: vincenzo.locicero@libero.it
-    
-   From an idea by Leonardo Pozzati <e-mail: leon.pozzati@gmail.com>.
-   
+       
    Special thanks to Francesco Baro <e-mail: francesco.baro@libero.it >
    for code review and bug fixing.
    
@@ -153,18 +151,15 @@ int myopt_Parse(myopt_Parser_t parser, const char *strInput)
 		
 	if ( parser->strInput == NULL )
 	{		
-		len = strlen(strInput);
+		len = strnlen(strInput, MAX_LEN_STR);
 		parser->strInput = (char*)malloc(sizeof(char) * len + 1);
 		if ( !(parser->strInput ) )
 			return 0;
+		strncpy(parser->strInput, strInput, len);
 	}	
 				
 	md.m_Parser = parser;
-	
-	len = strnlen(strInput, MAX_LEN_STR);
-	
-	strncpy(parser->strInput, strInput, len);
-	
+		
 	myopt_MakeUsageString(md.m_Parser);
 	
 	myopt_InitToken(&(md.m_Token));

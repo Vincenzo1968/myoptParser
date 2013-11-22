@@ -3,9 +3,7 @@
 
    Author: Vincenzo Lo Cicero.
    e-mail: vincenzo.locicero@libero.it
-    
-   From an idea by Leonardo Pozzati <e-mail: leon.pozzati@gmail.com>.
-   
+       
    Special thanks to Francesco Baro <e-mail: francesco.baro@libero.it >
    for code review and bug fixing.
 

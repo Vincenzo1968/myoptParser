@@ -4,8 +4,6 @@
    Author: Vincenzo Lo Cicero.
    e-mail: vincenzo.locicero@libero.it
     
-   From an idea by Leonardo Pozzati <e-mail: leon.pozzati@gmail.com>.
-
    Special thanks to Francesco Baro <e-mail: francesco.baro@libero.it >
    for code review and bug fixing.
    
@@ -30,10 +28,6 @@
 #endif
 
 #include "myoptSymtab.h"
-
-/*
-valgrind --leak-check=full --show-reachable=yes --track-origins=yes --log-file=outValgrind.txt ./sample1 --help
-*/
 
 void myopt_SetLang(myopt_Parser_t parser, int l)
 {
